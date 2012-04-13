@@ -3,5 +3,8 @@
 
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">Costituzione</string>
-
+	
+    <string name="favourites">Favourites</string>
+    <string name="is_favourite">Favourite</string>
+    <string name="is_not_favourtie">Not favourite</string>
 </resources>

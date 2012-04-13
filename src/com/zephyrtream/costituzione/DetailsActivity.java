@@ -19,37 +19,31 @@
 
 package com.zephyrtream.costituzione;
 
-import android.app.ActionBar;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import com.zephyrtream.costituzione.fragments.DetailsFragment;
 
-public class MainActivity extends BasicActivity {
-    ActionBar mActionBar;
-    
+import android.app.Activity;
+import android.content.res.Configuration;
+import android.os.Bundle;
+
+public class DetailsActivity extends Activity {
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        mActionBar = getActionBar();
-        		
+
+        if (getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE) {
+            // If the screen is now in landscape mode, we can show the
+            // dialog in-line with the list so we don't need this activity.
+            finish();
+            return;
+        }
+
+        if (savedInstanceState == null) {
+            // During initial setup, plug in the details fragment.
+            DetailsFragment details = new DetailsFragment();
+            details.setArguments(getIntent().getExtras());
+            getFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+        }
     }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_mainscreen, menu);
-        return true;
-    }
-    
-    public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()){
-			case R.id.mainscreen_favourites:
-				//Open with an intent
-				break;
-		}
-		return true;
-	}
 }
