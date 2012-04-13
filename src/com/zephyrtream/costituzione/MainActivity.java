@@ -34,7 +34,7 @@ public class MainActivity extends BasicActivity {
         setContentView(R.layout.main);
         
         mActionBar = getActionBar();
-        		
+        mActionBar.setDisplayHomeAsUpEnabled(true);
     }
     
     @Override

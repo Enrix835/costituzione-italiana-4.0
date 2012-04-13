@@ -21,20 +21,35 @@ package com.zephyrtream.costituzione.fragments;
 
 import com.zephyrtream.costituzione.Shakespeare;
 
-import android.app.Fragment;
+//import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
+/*
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+*/
 
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends ListFragment {
     /**
      * Create a new instance of DetailsFragment, initialized to
      * show the text at 'index'.
      */
+	
+	@Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Populate list with our static array of titles.
+        setListAdapter(Shakespeare.getSimpleAdapter(getActivity()));
+        
+        
+	}
 	
 	 public static DetailsFragment newInstance(int index) {
 	     	DetailsFragment f = new DetailsFragment();
@@ -51,13 +66,14 @@ public class DetailsFragment extends Fragment {
 	        return getArguments().getInt("index", 0);
 	    }
 
+	    /*
 	    @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	            Bundle savedInstanceState) {
 	        if (container == null) {
 	            return null;
 	        }
-
+	        
 	        ScrollView scroller = new ScrollView(getActivity());
 	        TextView text = new TextView(getActivity());
 	        int padding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
@@ -66,6 +82,6 @@ public class DetailsFragment extends Fragment {
 	        scroller.addView(text);
 	        text.setText(Shakespeare.DIALOGUE[getShownIndex()]);
 	        return scroller;
-	    }
+	    }*/
 	
 }

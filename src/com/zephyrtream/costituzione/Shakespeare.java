@@ -19,6 +19,15 @@
 
 package com.zephyrtream.costituzione;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.content.Context;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
+
 public class Shakespeare {
 	/**
      * Our data, part 1.
@@ -239,4 +248,41 @@ public class Shakespeare {
             "Crack nature's moulds, an germens spill at once," + 
             "That make ingrateful man!"
     };
+    
+    public static List<Map<String,String>> getDataSample() {
+    	List<Map<String, String>> ret = new ArrayList<Map<String,String>>();
+    	ret.add(new HashMap<String,String>(){
+			{
+				put("title", "Title1");
+				put("summary","Summary1");
+			}
+        });
+		ret.add(new HashMap<String,String>(){
+			{
+				put("title", "Title2");
+				put("summary","Summary2");
+			}
+		});
+		ret.add(new HashMap<String,String>(){
+			{
+				put("title", "Title3");
+				put("summary","Summary3");
+			}
+		});
+    	return ret;
+    }
+    
+    public static SimpleAdapter getSimpleAdapter(Context context) {
+    		SimpleAdapter adapter = new SimpleAdapter(
+        		context, getDataSample(), 
+        		//android.R.layout.simple_list_item_2,
+        		R.layout.list_items,
+        		new String[]{"title","summary"}, 
+        		new int[]{android.R.id.text1, android.R.id.text2}
+        	);
+
+    	return adapter;
+    }
+    
+    
 }

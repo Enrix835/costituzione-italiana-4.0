@@ -92,7 +92,7 @@ public class ListsFragment extends ListFragment {
             if (details == null || details.getShownIndex() != index) {
                 // Make new fragment to show this selection.
                 details = DetailsFragment.newInstance(index);
-
+ 
                 // Execute a transaction, replacing any existing fragment
                 // with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();

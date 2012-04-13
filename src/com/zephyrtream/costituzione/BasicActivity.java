@@ -26,7 +26,7 @@ import android.os.Bundle;
 public class BasicActivity extends Activity {
 	
 	@Override
-	public void onCreate(Bundle savedInstance) {
+	protected void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
 	}
 	
