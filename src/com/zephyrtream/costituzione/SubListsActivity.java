@@ -19,21 +19,20 @@
 
 package com.zephyrtream.costituzione;
 
+import com.zephyrtream.costituzione.fragments.SubListsFragment;
 
-public class Shakespeare {
-	/**
-     * Our data, part 1.
-     */
-    public static final String[] TITLES = 
-    {
-            "Henry IV (1)",   
-            "Henry V",
-            "Henry VIII",       
-            "Richard II",
-            "Richard III",
-            "Merchant of Venice",  
-            "Othello",
-            "King Lear"
-    };
-    
+import android.os.Bundle;
+
+public class SubListsActivity extends BasicActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            SubListsFragment details = new SubListsFragment();
+            details.setArguments(getIntent().getExtras());
+            getFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+        }
+    }
 }

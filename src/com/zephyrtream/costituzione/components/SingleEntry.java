@@ -17,23 +17,38 @@
    * along with this program.  If not, see <http://www.gnu.org/licenses/>.
    */
 
-package com.zephyrtream.costituzione;
+package com.zephyrtream.costituzione.components;
 
-
-public class Shakespeare {
-	/**
-     * Our data, part 1.
-     */
-    public static final String[] TITLES = 
-    {
-            "Henry IV (1)",   
-            "Henry V",
-            "Henry VIII",       
-            "Richard II",
-            "Richard III",
-            "Merchant of Venice",  
-            "Othello",
-            "King Lear"
-    };
-    
+public class SingleEntry {
+	private String mTitle;
+	private String mBody;
+	private int mId;
+	private boolean mIsFavourite;
+	
+	public SingleEntry(String title, String body, int id, boolean favourite) {
+		mTitle = title;
+		mBody = body;
+		mId = id;
+		mIsFavourite = favourite;
+	}
+	
+	public String getTitle() {
+		return mTitle;
+	}
+	
+	public String getBody() {
+		return mBody;
+	}
+	
+	public int getId() {
+		return mId;
+	}
+	
+	public boolean isFavourite() {
+		return mIsFavourite;
+	}
+	
+	public void setIsFavourite(boolean isFavourite) {
+		mIsFavourite = isFavourite;
+	}
 }

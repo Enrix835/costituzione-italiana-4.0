@@ -20,8 +20,8 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".DetailsActivity" />
-        
+        <activity android:name=".SubListsActivity" android:configChanges="orientation|screenSize" />
+        <activity android:name=".DetailedActivity" android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

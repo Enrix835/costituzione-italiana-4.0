@@ -35,6 +35,7 @@ public class MainActivity extends BasicActivity {
         
         mActionBar = getActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
+        
     }
     
     @Override
