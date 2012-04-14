@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zephyrtream.costituzione.DetailedActivity;
+import com.zephyrtream.costituzione.Shakespeare;
 import com.zephyrtream.costituzione.components.EntriesAdapter;
 import com.zephyrtream.costituzione.components.SingleEntry;
 
@@ -88,7 +89,6 @@ public class SubListsFragment extends ListFragment {
 					long id, boolean checked) {
 				// TODO Auto-generated method stub
 				
-				//mList.setItemChecked(position - 1, checked);
 				
 				
 			}

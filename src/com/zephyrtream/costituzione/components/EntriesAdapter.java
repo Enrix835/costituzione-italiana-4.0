@@ -21,6 +21,8 @@ package com.zephyrtream.costituzione.components;
 
 import java.util.List;
 
+import com.zephyrtream.costituzione.R;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +61,7 @@ public class EntriesAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(android.R.layout.simple_list_item_2, null);
+            convertView = inflater.inflate(R.layout.list_items, null);
         }
         TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
         text1.setText(entry.getTitle());
