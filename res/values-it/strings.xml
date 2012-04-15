@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remove_from_fav">Rimuovi dai Preferiti</string>
+    <string name="add_to_fav">Aggiungi ai Preferiti</string>
+    <string name="favorites">Preferiti</string> 
+    
+    <string name="list_favorites_status">Indicatore per lo stato del preferito</string>
+    
+    <string name="categories_0">Principi fondamentali</string>
+    <string name="categories_1">Rapporti civili</string>
+    <string name="categories_2">Rapporti etico-sociali</string>
+    <string name="categories_3">Rapporti economici</string>
+    <string name="categories_4">Rapporti politici</string>
+    <string name="categories_5">Il Parlamento</string>
+    <string name="categories_6">Il Presidente della Repubblica</string>
+    <string name="categories_7">Il Governo</string>
+    <string name="categories_8">La Magistratura</string>
+    <string name="categories_9">Regioni, Provincie e Comuni</string>
+    <string name="categories_10">Garanzie costituzionali</string>
+    <string name="categories_11">Disposizioni finali e transitorie</string>
+    
+    <string name="part_0">PREAMBOLO</string>
+    <string name="part_1">DIRITTI E DOVERI DEI CITTADINI</string>
+    <string name="part_2">ORDINAMENTO DELLA REPUBBLICA</string>
+    <string name="part_3">CONCLUSIONE</string>
+</resources>

@@ -20,7 +20,6 @@
 package com.zephyrtream.costituzione.fragments;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import com.zephyrtream.costituzione.Constants;
@@ -39,7 +38,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.ListView;
-import android.widget.TwoLineListItem;
 
 public class SubListsFragment extends ListFragment {
 	List<SingleEntry> list;
@@ -109,7 +107,7 @@ public class SubListsFragment extends ListFragment {
 					long id, boolean checked) {
 				// TODO Auto-generated method stub
 				
-				SingleEntry entry = (SingleEntry)mAdapter.getItem(position);
+				//SingleEntry entry = (SingleEntry)mAdapter.getItem(position);
 				selected.add(position);
 				Menu mMenu = mode.getMenu();
 				mMenu.clear();

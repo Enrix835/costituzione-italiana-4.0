@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">Costituzione</string>
 	
-    <string name="favourites">Favourites</string>
-    <string name="is_favourite">Favourite</string>
-    <string name="is_not_favourtie">Not favourite</string>
+    <string name="remove_from_fav">Remove from Favorites</string>
+    <string name="add_to_fav">Add to Favorites</string>
+    <string name="favorites">Favorites</string>
+    
+    <string name="list_favorites_status">Indicator for the favorite status</string>
 </resources>

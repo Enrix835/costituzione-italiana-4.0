@@ -21,13 +21,14 @@ package com.zephyrtream.costituzione.fragments;
 
 import com.zephyrtream.costituzione.R;
 import com.zephyrtream.costituzione.SubListsActivity;
+import com.zephyrtream.costituzione.components.Categories;
+import com.zephyrtream.costituzione.components.TitlesAdapter;
 
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView; 
 
 public class ListsFragment extends ListFragment {
@@ -35,16 +36,13 @@ public class ListsFragment extends ListFragment {
 	boolean mDualPane;
     int mCurCheckPosition = 0;
 
-    String [] titles = { "Category1", "Category2", "Category3", "Category4", "Category5"," Category6", "Category7" };
-    
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
+        TitlesAdapter ta = new TitlesAdapter(getActivity(), Categories.getStructuredTitles(getActivity()));
+        setListAdapter(ta);
         
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_activated_1, titles));
-
         View detailsFrame = getActivity().findViewById(R.id.details);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 

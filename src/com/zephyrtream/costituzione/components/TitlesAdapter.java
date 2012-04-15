@@ -28,14 +28,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-public class EntriesAdapter extends BaseAdapter {
+public class TitlesAdapter extends BaseAdapter {
 	private Context context;
-    private List<SingleEntry> entries;
+    private List<Object> entries;
     
-	public EntriesAdapter(Context context, List<SingleEntry> entries) {
+    private final int TYPE_TITLE = 0;
+    private final int TYPE_SEPARATOR = 1;
+    private final int TYPE_MAXCOUNT = 2;
+    
+	public TitlesAdapter(Context context, List<Object> entries) {
 		this.context = context;
 		this.entries = entries;
 	}
@@ -57,35 +60,51 @@ public class EntriesAdapter extends BaseAdapter {
 	}
 	
 	@Override
+    public int getItemViewType(int position) {
+		Object obj = entries.get(position);
+		
+		return ((obj instanceof SingleTitle) ? TYPE_TITLE : TYPE_SEPARATOR);
+	}
+	
+	@Override
+    public int getViewTypeCount() {
+        return TYPE_MAXCOUNT;
+    }
+	
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		SingleEntry entry = entries.get(position);
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_items_accurate, null);
+		Object entry = entries.get(position);
+		boolean isCategory = (entry instanceof TitleCategory);
+	
+		if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(isCategory ? R.layout.list_category_divider : R.layout.list_items_simple, null);
         }
-        TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
-        
-        if (text1 != null) text1.setText(entry.getTitle());
-        
-        TextView text2 = (TextView) convertView.findViewById(android.R.id.text2);
-        if (text2 != null) text2.setText(entry.getBody());
-
-        ImageView favStatus = (ImageView) convertView.findViewById(R.id.favourite_status);
-        if (favStatus != null) 
-        	favStatus.setImageResource(entry.isFavourite() ? R.drawable.is_favourite : R.drawable.is_not_favourite);
-        
+		
+        if (isCategory) {
+        	TitleCategory tc = (TitleCategory)entry;
+        	convertView.setClickable(false);
+        	
+        	TextView tv = (TextView) convertView.findViewById(R.id.list_item_section_text);
+        	if (tv != null) tv.setText(tc.getTitle());
+        } else {
+        	SingleTitle tc = (SingleTitle)entry;
+        	
+        	TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
+        	if (tv != null) 
+        		tv.setText(tc.getTitle());
+        }
         return convertView;
+        
 	}
 	
 
-	public List<SingleEntry> getList() {
+	public List<Object> getList() {
 		return entries;
 	}
 	
-	public void setList(List<SingleEntry> newentries) {
+	public void setList(List<Object> newentries) {
 		entries = newentries;
 		notifyDataSetChanged();
 	}
-
 }
