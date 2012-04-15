@@ -23,11 +23,13 @@ public class SingleEntry {
 	private String mTitle;
 	private String mBody;
 	private int mId;
+	private int mCategory;
 	private boolean mIsFavourite;
 	
-	public SingleEntry(String title, String body, int id, boolean favourite) {
+	public SingleEntry(String title, String body, int category, int id, boolean favourite) {
 		mTitle = title;
 		mBody = body;
+		mCategory = category;
 		mId = id;
 		mIsFavourite = favourite;
 	}
@@ -42,6 +44,10 @@ public class SingleEntry {
 	
 	public int getId() {
 		return mId;
+	}
+	
+	public int getCategory() {
+		return mCategory;
 	}
 	
 	public boolean isFavourite() {

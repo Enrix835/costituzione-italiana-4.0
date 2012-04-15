@@ -2,4 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/favourite_status"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_item_share"
+        android:showAsAction="ifRoom"
+        android:title="Share"
+        android:actionProviderClass="android.widget.ShareActionProvider" />
 </menu>

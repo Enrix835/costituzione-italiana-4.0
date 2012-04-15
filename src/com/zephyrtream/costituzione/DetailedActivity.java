@@ -19,19 +19,59 @@
 
 package com.zephyrtream.costituzione;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ShareActionProvider;
 
+import com.zephyrtream.costituzione.components.SingleEntry;
 import com.zephyrtream.costituzione.fragments.DetailedFragment;
 
 public class DetailedActivity extends BasicActivity {
+	SingleEntry mEntry;
+	ShareActionProvider mShareProvider;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState == null) {
         	Bundle data = getIntent().getExtras();
+        	mEntry = new SingleEntry(data.getString("title"), data.getString("body"), data.getInt("category"), data.getInt("id"), data.getBoolean("favorite"));
             DetailedFragment df = new DetailedFragment(data);
             getFragmentManager().beginTransaction().replace(android.R.id.content, df).commit();
         }
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	getMenuInflater().inflate(R.menu.actionbar_details, menu);
+    	if (mEntry == null) return false;
+    	boolean isFav = mEntry.isFavourite();
+    	
+    	int icon = isFav ? R.drawable.is_favourite : R.drawable.is_not_favourite;
+    	String text = isFav ? "Remove from favorites" : "Add to favorites";
+    	
+    	menu.findItem(R.id.favourite_status).setIcon(icon).setTitle(text);
+    	
+    	MenuItem shareItem = menu.findItem(R.id.menu_item_share);
+    	mShareProvider = (ShareActionProvider) shareItem.getActionProvider();
+    	mShareProvider.setShareIntent(getShareIntent());
+    	return true;
+    }
+    
+    public boolean onOptionsItemSelected(MenuItem item) {
+		
+		return true;
+	}
+    
+    
+    public Intent getShareIntent() {
+    	String text = mEntry.getTitle() + ": " + mEntry.getBody();
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);
+		shareIntent.setType("text/*");
+		shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+		return shareIntent;
     }
 }

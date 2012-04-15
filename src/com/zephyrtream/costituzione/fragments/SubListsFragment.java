@@ -20,6 +20,7 @@
 package com.zephyrtream.costituzione.fragments;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import com.zephyrtream.costituzione.Constants;
@@ -41,16 +42,16 @@ import android.widget.ListView;
 import android.widget.TwoLineListItem;
 
 public class SubListsFragment extends ListFragment {
-	
+	List<SingleEntry> list;
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
         // We use a custom adapter that accept a List as argoument.
-        List<SingleEntry> list = new ArrayList<SingleEntry>();
-        list.add(new SingleEntry("Title1", "Summary1", 0, false));
-        list.add(new SingleEntry("Title2", "Summary2", 1, false));
-        list.add(new SingleEntry("Title3", "Summary3", 2, false));
+        list = new ArrayList<SingleEntry>();
+        list.add(new SingleEntry("Title1", "Summary1", 1, 0, false));
+        list.add(new SingleEntry("Title2", "Summary2", 1, 1, false));
+        list.add(new SingleEntry("Title3", "Summary3", 1, 2, false));
         
         //This is a simple list that contains all the selected entries
         final List<Integer> selected = new ArrayList<Integer>();
@@ -122,11 +123,9 @@ public class SubListsFragment extends ListFragment {
 	
 	 public static SubListsFragment newInstance(int index) {
 	     	SubListsFragment f = new SubListsFragment();
-
 	        Bundle args = new Bundle();
 	        args.putInt("index", index);
 	        f.setArguments(args);
-
 	        return f;
 	    }
 
@@ -137,12 +136,12 @@ public class SubListsFragment extends ListFragment {
 		@Override
 	    public void onListItemClick(ListView l, View v, int position, long id) {
 			Intent intent = new Intent(getActivity(), DetailedActivity.class);
-			Bundle data = new Bundle();
-			//TODO: we should get values from the ListAdapter instead.
-			TwoLineListItem item = (TwoLineListItem)v;
-			data.putString("title", (String)item.getText1().getText());
-			data.putString("body", (String)item.getText2().getText());
-			intent.putExtras(data);
+			SingleEntry entry = list.get(position);
+			intent.putExtra("title", entry.getTitle());
+			intent.putExtra("body", entry.getBody());
+			intent.putExtra("id", entry.getId());
+			intent.putExtra("category", entry.getCategory());
+			intent.putExtra("favorite", entry.isFavourite());
 			startActivity(intent);
 	    }
 	
