@@ -1,25 +1,33 @@
-<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android" 
+<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:mode="twoLine"
     android:background="?android:attr/activatedBackgroundIndicator"
->
-    
-	<TextView android:id="@android:id/text1"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-    android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:layout_marginTop="8dip"
-		android:textAppearance="?android:attr/textAppearanceListItem"
-	/>
+    android:minHeight="?android:attr/listPreferredItemHeight" >
 		
-	<TextView android:id="@android:id/text2"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_below="@android:id/text1"
-    	android:layout_alignLeft="@android:id/text1"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-	/>
+			<TextView android:id="@android:id/text1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+    			android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
+    			android:layout_marginTop="8dip"
+				android:textAppearance="?android:attr/textAppearanceListItem"
+			/>
+			
+			<TextView android:id="@android:id/text2"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@android:id/text1"
+    			android:layout_alignLeft="@android:id/text1"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+			/>
 
+			<ImageView
+			    android:id="@+id/favourite_status"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentRight="true"
+			    android:layout_alignTop="@android:id/text1"
+			    android:src="@drawable/is_not_favourite"
+			    android:background="@null"
+			    android:layout_margin="9dp"/>
+			
 </TwoLineListItem>

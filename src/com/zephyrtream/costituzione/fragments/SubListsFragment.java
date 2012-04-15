@@ -22,8 +22,9 @@ package com.zephyrtream.costituzione.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zephyrtream.costituzione.Constants;
 import com.zephyrtream.costituzione.DetailedActivity;
-import com.zephyrtream.costituzione.Shakespeare;
+import com.zephyrtream.costituzione.R;
 import com.zephyrtream.costituzione.components.EntriesAdapter;
 import com.zephyrtream.costituzione.components.SingleEntry;
 
@@ -51,7 +52,10 @@ public class SubListsFragment extends ListFragment {
         list.add(new SingleEntry("Title2", "Summary2", 1, false));
         list.add(new SingleEntry("Title3", "Summary3", 2, false));
         
-        EntriesAdapter mAdapter = new EntriesAdapter(getActivity(), list);
+        //This is a simple list that contains all the selected entries
+        final List<Integer> selected = new ArrayList<Integer>();
+        
+        final EntriesAdapter mAdapter = new EntriesAdapter(getActivity(), list);
         setListAdapter(mAdapter);
         
         final ListView mList = getListView();
@@ -62,25 +66,40 @@ public class SubListsFragment extends ListFragment {
 			
 			@Override
 			public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 			
 			@Override
 			public void onDestroyActionMode(ActionMode mode) {
-				// TODO Auto-generated method stub
-				
+				selected.clear();
 			}
 			
 			@Override
 			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-				// TODO Auto-generated method stub
 				return true;
 			}
 			
 			@Override
 			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-				// TODO Auto-generated method stub
+				switch(item.getItemId()){
+				case Constants.ACTIONMODE_FAVOURITE_ID:
+					//This just temporarily set new favorites. 
+					//In the real code we should write the changes to the database.
+					Integer [] array = new Integer[selected.size()];
+					selected.toArray(array);
+					for(int i : array){
+						List<SingleEntry> list = mAdapter.getList();
+						SingleEntry entry = list.get(i);
+						entry.setIsFavourite(true);
+						list.remove(i);
+						list.add(i, entry);
+						mAdapter.setList(list);
+						//When we update the adapter we should update the database too.
+					}
+					mList.invalidateViews();
+					mode.finish();
+					break;
+				}
 				return true;
 			}
 			
@@ -89,8 +108,13 @@ public class SubListsFragment extends ListFragment {
 					long id, boolean checked) {
 				// TODO Auto-generated method stub
 				
+				SingleEntry entry = (SingleEntry)mAdapter.getItem(position);
+				selected.add(position);
+				Menu mMenu = mode.getMenu();
+				mMenu.clear();
 				
-				
+				mMenu.add(Menu.NONE, Constants.ACTIONMODE_FAVOURITE_ID, 1, "")
+					.setIcon(R.drawable.is_favourite);
 			}
 		});
         

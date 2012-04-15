@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EntriesAdapter extends BaseAdapter {
@@ -69,9 +70,19 @@ public class EntriesAdapter extends BaseAdapter {
         TextView text2 = (TextView) convertView.findViewById(android.R.id.text2);
         text2.setText(entry.getBody());
 
+        ImageView favStatus = (ImageView) convertView.findViewById(R.id.favourite_status);
+        favStatus.setImageResource(entry.isFavourite() ? R.drawable.is_favourite : R.drawable.is_not_favourite);
         return convertView;
 	}
 	
 
+	public List<SingleEntry> getList() {
+		return entries;
+	}
+	
+	public void setList(List<SingleEntry> newentries) {
+		entries = newentries;
+		notifyDataSetChanged();
+	}
 
 }

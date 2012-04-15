@@ -20,7 +20,6 @@
 package com.zephyrtream.costituzione.fragments;
 
 import com.zephyrtream.costituzione.R;
-import com.zephyrtream.costituzione.Shakespeare;
 import com.zephyrtream.costituzione.SubListsActivity;
 
 import android.app.FragmentTransaction;
@@ -36,28 +35,25 @@ public class ListsFragment extends ListFragment {
 	boolean mDualPane;
     int mCurCheckPosition = 0;
 
+    String [] titles = { "Category1", "Category2", "Category3", "Category4", "Category5"," Category6", "Category7" };
+    
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        // Populate list with our static array of titles.
+        
+        
         setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_activated_1, Shakespeare.TITLES));
+                android.R.layout.simple_list_item_activated_1, titles));
 
-        // Check to see if we have a frame in which to embed the details
-        // fragment directly in the containing UI.
         View detailsFrame = getActivity().findViewById(R.id.details);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 
         if (savedInstanceState != null) {
-            // Restore last state for checked position.
             mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
         }
 
         if (mDualPane) {
-            // In dual-pane mode, the list view highlights the selected item.
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            // Make sure our UI is in the correct state.
             showDetails(mCurCheckPosition);
         }
     }
@@ -91,8 +87,6 @@ public class ListsFragment extends ListFragment {
             }
 
         } else {
-            // Otherwise we need to launch a new activity to display
-            // the dialog fragment with selected text.
             Intent intent = new Intent();
             intent.setClass(getActivity(), SubListsActivity.class);
             intent.putExtra("index", index);

@@ -19,21 +19,7 @@
 
 package com.zephyrtream.costituzione;
 
-
-public class Shakespeare {
-	/**
-     * Our data, part 1.
-     */
-    public static final String[] TITLES = 
-    {
-            "Henry IV (1)",   
-            "Henry V",
-            "Henry VIII",       
-            "Richard II",
-            "Richard III",
-            "Merchant of Venice",  
-            "Othello",
-            "King Lear"
-    };
-    
+public final class Constants {
+	public final static int ACTIONMODE_FAVOURITE_ID = 0x33;
+	public final static int ACTIONMODE_NOT_FAVOURITE_ID = 0x34;
 }
