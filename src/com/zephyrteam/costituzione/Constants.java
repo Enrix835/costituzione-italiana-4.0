@@ -20,6 +20,17 @@
 package com.zephyrteam.costituzione;
 
 public final class Constants {
+	public final static int ACTIONMODE_COPY_ID = 0x32;
 	public final static int ACTIONMODE_FAVOURITE_ID = 0x33;
 	public final static int ACTIONMODE_NOT_FAVOURITE_ID = 0x34;
+	
+	public final static int DB_VERSION = 1;
+	public final static String DB_NAME = "costituzione.db";
+	public final static String DB_TABLE = "articoli";
+	
+	public final static int DB_COLUMN_ID = 0;
+	public final static int DB_COLUMN_BODY = 1;
+	public final static int DB_COLUMN_CATEGORY = 2;
+	public final static int DB_COLUMN_FAVORITE = 3;
+	
 }

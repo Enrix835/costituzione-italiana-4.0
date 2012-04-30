@@ -19,14 +19,20 @@
 
 package com.zephyrteam.costituzione;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
+import android.widget.Toast;
 
 import com.zephyrteam.costituzione.components.SingleEntry;
 import com.zephyrteam.costituzione.fragments.DetailedFragment;
+import com.zephyrteam.costituzione.util.DatabaseHandler;
 
 public class DetailedActivity extends BasicActivity {
 	SingleEntry mEntry;
@@ -38,22 +44,25 @@ public class DetailedActivity extends BasicActivity {
 
         if (savedInstanceState == null) {
         	Bundle data = getIntent().getExtras();
-        	mEntry = new SingleEntry(data.getString("title"), data.getString("body"), data.getInt("category"), data.getInt("id"), data.getBoolean("favorite"));
-            DetailedFragment df = new DetailedFragment(data);
+        	
+        	int id = data.getInt("id");
+        	Log.d("DBG", "ID:= " + id);
+        	DatabaseHandler dbh = new DatabaseHandler(this);
+        	dbh.open(false);
+        	mEntry = dbh.getSingleEntry(id);
+        	dbh.close();
+        	
+        	DetailedFragment df = new DetailedFragment(mEntry);
             getFragmentManager().beginTransaction().replace(android.R.id.content, df).commit();
         }
-    }
+    } 
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	getMenuInflater().inflate(R.menu.actionbar_details, menu);
     	if (mEntry == null) return false;
-    	boolean isFav = mEntry.isFavourite();
     	
-    	int icon = isFav ? R.drawable.is_favourite : R.drawable.is_not_favourite;
-    	String text = isFav ? "Remove from favorites" : "Add to favorites";
-    	
-    	menu.findItem(R.id.favourite_status).setIcon(icon).setTitle(text);
+    	updateFavoriteButton(menu.findItem(R.id.favourite_status));
     	
     	MenuItem shareItem = menu.findItem(R.id.menu_item_share);
     	mShareProvider = (ShareActionProvider) shareItem.getActionProvider();
@@ -62,7 +71,26 @@ public class DetailedActivity extends BasicActivity {
     }
     
     public boolean onOptionsItemSelected(MenuItem item) {
-		
+		switch(item.getItemId()) {
+			case R.id.copy_entry:
+				String toCopy = mEntry.getTitle() + ": \n" + mEntry.getBody().replace("\n\n", "\n");
+				
+				ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+				clipboard.setPrimaryClip(ClipData.newPlainText("Costituzione", toCopy));
+				new Toast(this).makeText(this, R.string.text_copied_to_clipboard, 2000).show();
+				
+				break;
+				
+			case R.id.favourite_status:
+				DatabaseHandler dbh = new DatabaseHandler(this);
+				dbh.open(true);
+				mEntry.setIsFavourite(!mEntry.isFavourite());
+				dbh.updateFavoriteStatus(mEntry);
+				dbh.close();
+				
+				new Toast(this).makeText(this, mEntry.isFavourite() ? R.string.added_to_fav : R.string.removed_from_fav, 2000).show();
+				updateFavoriteButton(item);
+		}
 		return true;
 	}
     
@@ -73,5 +101,15 @@ public class DetailedActivity extends BasicActivity {
 		shareIntent.setType("text/*");
 		shareIntent.putExtra(Intent.EXTRA_TEXT, text);
 		return shareIntent;
+    }
+    
+    public void updateFavoriteButton(MenuItem favorite) {
+    	boolean isFav = mEntry.isFavourite();
+    	
+    	int icon = isFav ? R.drawable.is_favorite_light : R.drawable.is_not_favorite_light;
+    	int title = isFav ? R.string.remove_from_fav : R.string.add_to_fav;
+    	
+    	favorite.setIcon(icon).setTitle(title);
+
     }
 }

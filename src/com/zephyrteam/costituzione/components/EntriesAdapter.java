@@ -73,7 +73,7 @@ public class EntriesAdapter extends BaseAdapter {
 
         ImageView favStatus = (ImageView) convertView.findViewById(R.id.favourite_status);
         if (favStatus != null) 
-        	favStatus.setImageResource(entry.isFavourite() ? R.drawable.is_favourite : R.drawable.is_not_favourite);
+        	favStatus.setImageResource(entry.isFavourite() ? R.drawable.is_favorite_selector : R.drawable.is_not_favorite_selector);
         
         return convertView;
 	}

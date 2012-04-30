@@ -26,15 +26,20 @@ import com.zephyrteam.costituzione.components.TitlesAdapter;
 
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView; 
+import android.widget.Toast;
 
 public class ListsFragment extends ListFragment {
 		
 	boolean mDualPane;
     int mCurCheckPosition = 0;
+    
+    public ListsFragment() {
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -51,8 +56,8 @@ public class ListsFragment extends ListFragment {
         }
 
         if (mDualPane) {
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             showDetails(mCurCheckPosition);
+            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
     }
 
@@ -64,14 +69,16 @@ public class ListsFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        showDetails(position);
+    	
+    	int category = Categories.getCategoryFromPosition(position);
+        showDetails(category);
     }
 
     void showDetails(int index) {
         mCurCheckPosition = index;
 
         if (mDualPane) {
-            getListView().setItemChecked(index, true);
+            //getListView().setItemChecked(index, true);
 
            	SubListsFragment details = (SubListsFragment)
                     getFragmentManager().findFragmentById(R.id.details);

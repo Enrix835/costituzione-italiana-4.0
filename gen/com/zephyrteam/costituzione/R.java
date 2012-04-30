@@ -15,19 +15,25 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int favourites=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int is_favourite=0x7f020002;
-        public static final int is_not_favourite=0x7f020003;
+        public static final int content_copy=0x7f020000;
+        public static final int favorites=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int is_favorite_dark=0x7f020003;
+        public static final int is_favorite_light=0x7f020004;
+        public static final int is_favorite_selector=0x7f020005;
+        public static final int is_not_favorite_dark=0x7f020006;
+        public static final int is_not_favorite_light=0x7f020007;
+        public static final int is_not_favorite_selector=0x7f020008;
     }
     public static final class id {
+        public static final int copy_entry=0x7f070007;
         public static final int detailed_body_view=0x7f070002;
         public static final int detailed_title_view=0x7f070001;
         public static final int details=0x7f070006;
         public static final int favourite_status=0x7f070004;
         public static final int list_item_section_text=0x7f070003;
-        public static final int mainscreen_favourites=0x7f070008;
-        public static final int menu_item_share=0x7f070007;
+        public static final int mainscreen_favorites=0x7f070009;
+        public static final int menu_item_share=0x7f070008;
         public static final int scroll_view=0x7f070000;
         public static final int titles=0x7f070005;
     }
@@ -44,25 +50,31 @@ public final class R {
     }
     public static final class string {
         public static final int add_to_fav=0x7f050002;
+        public static final int added_to_fav=0x7f050019;
         public static final int app_name=0x7f050000;
-        public static final int categories_0=0x7f050005;
-        public static final int categories_1=0x7f050006;
-        public static final int categories_10=0x7f05000f;
-        public static final int categories_11=0x7f050010;
-        public static final int categories_2=0x7f050007;
-        public static final int categories_3=0x7f050008;
-        public static final int categories_4=0x7f050009;
-        public static final int categories_5=0x7f05000a;
-        public static final int categories_6=0x7f05000b;
-        public static final int categories_7=0x7f05000c;
-        public static final int categories_8=0x7f05000d;
-        public static final int categories_9=0x7f05000e;
+        public static final int categories_0=0x7f050007;
+        public static final int categories_1=0x7f050008;
+        public static final int categories_10=0x7f050011;
+        public static final int categories_11=0x7f050012;
+        public static final int categories_2=0x7f050009;
+        public static final int categories_3=0x7f05000a;
+        public static final int categories_4=0x7f05000b;
+        public static final int categories_5=0x7f05000c;
+        public static final int categories_6=0x7f05000d;
+        public static final int categories_7=0x7f05000e;
+        public static final int categories_8=0x7f05000f;
+        public static final int categories_9=0x7f050010;
+        public static final int entry_title_article=0x7f050017;
+        public static final int entry_title_conclusions=0x7f050018;
         public static final int favorites=0x7f050003;
-        public static final int list_favorites_status=0x7f050004;
-        public static final int part_0=0x7f050011;
-        public static final int part_1=0x7f050012;
-        public static final int part_2=0x7f050013;
-        public static final int part_3=0x7f050014;
+        public static final int list_favorites_status=0x7f050005;
+        public static final int part_0=0x7f050013;
+        public static final int part_1=0x7f050014;
+        public static final int part_2=0x7f050015;
+        public static final int part_3=0x7f050016;
         public static final int remove_from_fav=0x7f050001;
+        public static final int removed_from_fav=0x7f05001a;
+        public static final int text_copied_to_clipboard=0x7f050006;
+        public static final int wait_dialog=0x7f050004;
     }
 }

@@ -19,6 +19,11 @@
 
 package com.zephyrteam.costituzione.components;
 
+import com.zephyrteam.costituzione.R;
+import com.zephyrteam.costituzione.util.Util;
+
+import android.content.Context;
+
 public class SingleEntry {
 	private String mTitle;
 	private String mBody;
@@ -26,7 +31,7 @@ public class SingleEntry {
 	private int mCategory;
 	private boolean mIsFavourite;
 	
-	public SingleEntry(String title, String body, int category, int id, boolean favourite) {
+	public SingleEntry(String title, String body, int id, int category, boolean favourite) {
 		mTitle = title;
 		mBody = body;
 		mCategory = category;
@@ -56,5 +61,15 @@ public class SingleEntry {
 	
 	public void setIsFavourite(boolean isFavourite) {
 		mIsFavourite = isFavourite;
+	}
+	
+	public static String getTitleFromId(Context context, int id) {
+		if (id < 140) {
+			return context.getResources().getString(R.string.entry_title_article, id);
+		} else {
+			String disp = Util.getCategoryRomanNumber(id);
+			return context.getResources().getString(R.string.entry_title_conclusions, disp);
+		}
+		
 	}
 }

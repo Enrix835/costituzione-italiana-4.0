@@ -19,14 +19,22 @@
 
 package com.zephyrteam.costituzione;
 
+import java.io.File;
+
+import com.zephyrteam.costituzione.util.IO;
+
 import android.app.ActionBar;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class MainActivity extends BasicActivity {
     ActionBar mActionBar;
+    
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,18 @@ public class MainActivity extends BasicActivity {
         
         mActionBar = getActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(false);
+        final Context context = this;
+        
+        new Runnable() {
+        	@Override
+			public void run() {
+				File database = context.getDatabasePath("costituzione.db");
+		   	 	if (!database.exists()) {
+		   	 		IO.copyDatabase(context);
+		   	 	}
+			}
+        	
+        }.run();
         
     }
     
@@ -47,8 +67,9 @@ public class MainActivity extends BasicActivity {
     
     public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
-			case R.id.mainscreen_favourites:
-				//Open with an intent
+			case R.id.mainscreen_favorites:
+				Intent intent = new Intent(this, FavoritesActivity.class);
+				startActivity(intent);
 				break;
 		}
 		return true;

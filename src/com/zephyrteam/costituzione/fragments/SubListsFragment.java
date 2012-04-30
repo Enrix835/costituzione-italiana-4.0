@@ -22,102 +22,35 @@ package com.zephyrteam.costituzione.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zephyrteam.costituzione.Constants;
 import com.zephyrteam.costituzione.DetailedActivity;
-import com.zephyrteam.costituzione.R;
 import com.zephyrteam.costituzione.components.EntriesAdapter;
 import com.zephyrteam.costituzione.components.SingleEntry;
+import com.zephyrteam.costituzione.util.LoadUiTask;
 
 //import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.ListView;
 
 public class SubListsFragment extends ListFragment {
 	List<SingleEntry> list;
+	
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        
-        // We use a custom adapter that accept a List as argoument.
-        list = new ArrayList<SingleEntry>();
-        list.add(new SingleEntry("Title1", "Summary1", 1, 0, false));
-        list.add(new SingleEntry("Title2", "Summary2", 1, 1, false));
-        list.add(new SingleEntry("Title3", "Summary3", 1, 2, false));
-        
-        //This is a simple list that contains all the selected entries
-        final List<Integer> selected = new ArrayList<Integer>();
-        
-        final EntriesAdapter mAdapter = new EntriesAdapter(getActivity(), list);
-        setListAdapter(mAdapter);
-        
-        final ListView mList = getListView();
-        registerForContextMenu(mList);
-        
-        mList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        mList.setMultiChoiceModeListener(new MultiChoiceModeListener() {
-			
-			@Override
-			public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-				return false;
-			}
-			
-			@Override
-			public void onDestroyActionMode(ActionMode mode) {
-				selected.clear();
-			}
-			
-			@Override
-			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-				return true;
-			}
-			
-			@Override
-			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-				switch(item.getItemId()){
-				case Constants.ACTIONMODE_FAVOURITE_ID:
-					//This just temporarily set new favorites. 
-					//In the real code we should write the changes to the database.
-					Integer [] array = new Integer[selected.size()];
-					selected.toArray(array);
-					for(int i : array){
-						List<SingleEntry> list = mAdapter.getList();
-						SingleEntry entry = list.get(i);
-						entry.setIsFavourite(true);
-						list.remove(i);
-						list.add(i, entry);
-						mAdapter.setList(list);
-						//When we update the adapter we should update the database too.
-					}
-					mList.invalidateViews();
-					mode.finish();
-					break;
-				}
-				return true;
-			}
-			
-			@Override
-			public void onItemCheckedStateChanged(ActionMode mode, int position,
-					long id, boolean checked) {
-				// TODO Auto-generated method stub
-				
-				//SingleEntry entry = (SingleEntry)mAdapter.getItem(position);
-				selected.add(position);
-				Menu mMenu = mode.getMenu();
-				mMenu.clear();
-				
-				mMenu.add(Menu.NONE, Constants.ACTIONMODE_FAVOURITE_ID, 1, "")
-					.setIcon(R.drawable.is_favourite);
-			}
-		});
-        
+       
 	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		LoadUiTask task = new LoadUiTask(getActivity(), this, getShownIndex());
+        task.execute();
+	}
+	
 	
 	 public static SubListsFragment newInstance(int index) {
 	     	SubListsFragment f = new SubListsFragment();
@@ -130,17 +63,9 @@ public class SubListsFragment extends ListFragment {
 	    public int getShownIndex() {
 	        return getArguments().getInt("index", 0);
 	    }
-		
-		@Override
-	    public void onListItemClick(ListView l, View v, int position, long id) {
-			Intent intent = new Intent(getActivity(), DetailedActivity.class);
-			SingleEntry entry = list.get(position);
-			intent.putExtra("title", entry.getTitle());
-			intent.putExtra("body", entry.getBody());
-			intent.putExtra("id", entry.getId());
-			intent.putExtra("category", entry.getCategory());
-			intent.putExtra("favorite", entry.isFavourite());
-			startActivity(intent);
-	    }
+	    
+		public void setMyAdapter(EntriesAdapter adapter) {
+			this.setListAdapter(adapter);
+		}
 	
 }

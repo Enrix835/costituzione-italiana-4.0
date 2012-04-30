@@ -59,6 +59,7 @@ public class TitlesAdapter extends BaseAdapter {
 		return position;
 	}
 	
+	
 	@Override
     public int getItemViewType(int position) {
 		Object obj = entries.get(position);
@@ -69,7 +70,7 @@ public class TitlesAdapter extends BaseAdapter {
 	@Override
     public int getViewTypeCount() {
         return TYPE_MAXCOUNT;
-    }
+   }
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -84,16 +85,19 @@ public class TitlesAdapter extends BaseAdapter {
         if (isCategory) {
         	TitleCategory tc = (TitleCategory)entry;
         	convertView.setClickable(false);
+        	convertView.setOnClickListener(null);
+        	convertView.setFocusable(false);
         	
         	TextView tv = (TextView) convertView.findViewById(R.id.list_item_section_text);
         	if (tv != null) tv.setText(tc.getTitle());
         } else {
         	SingleTitle tc = (SingleTitle)entry;
-        	
+        	convertView.setEnabled(true);
         	TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
         	if (tv != null) 
         		tv.setText(tc.getTitle());
         }
+        
         return convertView;
         
 	}

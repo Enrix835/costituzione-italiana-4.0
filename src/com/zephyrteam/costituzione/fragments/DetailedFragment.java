@@ -20,6 +20,7 @@
 package com.zephyrteam.costituzione.fragments;
 
 import com.zephyrteam.costituzione.R;
+import com.zephyrteam.costituzione.components.SingleEntry;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -29,24 +30,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class DetailedFragment extends Fragment {
-	String mTitle;
-	String mBody;
+	SingleEntry mEntry;
 	
 	TextView mTitleView;
 	TextView mBodyView;
 	
-	public DetailedFragment() {
-		this(null);
-	}
-	
-	public DetailedFragment(Bundle data) {
-		if (data == null) {
-			mTitle = "NULL";
-			mBody = "NULL";
-		}
-		
-		mTitle = data.getString("title", "NULL");
-		mBody = data.getString("body", "NULL");
+	public DetailedFragment(SingleEntry entry) {
+		mEntry = entry;
 	}
 	
 	@Override
@@ -61,8 +51,8 @@ public class DetailedFragment extends Fragment {
         mTitleView = (TextView) main.findViewById(R.id.detailed_title_view);
         mBodyView = (TextView) main.findViewById(R.id.detailed_body_view);
         
-        mTitleView.setText(mTitle);
-        mBodyView.setText(mBody);
+        mTitleView.setText(mEntry.getTitle());
+        mBodyView.setText(mEntry.getBody());
         
         return null;
     }

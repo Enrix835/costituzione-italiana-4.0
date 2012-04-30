@@ -1,3 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/activatedBackgroundIndicator"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+    	<ImageView
+			    android:id="@+id/favourite_status"
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:src="@drawable/is_not_favorite_selector"
+			    android:contentDescription="@string/list_favorites_status"
+			    android:background="@null"
+			    android:layout_margin="5dp"/>
+    	
+    	<LinearLayout android:orientation="vertical" 
+    	    android:layout_width="fill_parent" android:layout_height="match_parent"
+    	    android:layout_marginRight="3dp" android:layout_marginLeft="3dp">
+    	    
+    	    <TextView android:id="@android:id/text1"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+    			android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
+    			android:layout_marginTop="6dip"
+    			android:layout_marginBottom="3dp"
+				android:textAppearance="?android:attr/textAppearanceListItem"
+			/>
+    	    <TextView android:id="@android:id/text2"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+			/>
+    	</LinearLayout>
+</LinearLayout>
+
+<!--  
 <TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,17 +54,20 @@
 				android:layout_below="@android:id/text1"
     			android:layout_alignLeft="@android:id/text1"
 				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_marginLeft="4dp"
+				android:paddingRight="40dp"
 			/>
 
 			<ImageView
 			    android:id="@+id/favourite_status"
 			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
+			    android:layout_height="match_parent"
 			    android:layout_alignParentRight="true"
 			    android:layout_alignTop="@android:id/text1"
 			    android:src="@drawable/is_not_favourite"
 			    android:contentDescription="@string/list_favorites_status"
 			    android:background="@null"
-			    android:layout_margin="9dp"/>
+			    android:layout_margin="5dp"/>
 			
 </TwoLineListItem>
+-->

@@ -22,6 +22,8 @@
         
         <activity android:name=".SubListsActivity" android:configChanges="orientation|screenSize" />
         <activity android:name=".DetailedActivity" android:configChanges="orientation|screenSize" />
+        <activity android:name=".FavoritesActivity" android:configChanges="orientation|screenSize" />
+        
     </application>
 
 </manifest>

@@ -3,7 +3,7 @@
     <string name="remove_from_fav">Rimuovi dai Preferiti</string>
     <string name="add_to_fav">Aggiungi ai Preferiti</string>
     <string name="favorites">Preferiti</string> 
-    
+    <string name="wait_dialog">Attendi…</string>
     <string name="list_favorites_status">Indicatore per lo stato del preferito</string>
     
     <string name="categories_0">Principi fondamentali</string>
@@ -23,4 +23,11 @@
     <string name="part_1">DIRITTI E DOVERI DEI CITTADINI</string>
     <string name="part_2">ORDINAMENTO DELLA REPUBBLICA</string>
     <string name="part_3">CONCLUSIONE</string>
+    
+    <string name="entry_title_article">Articolo %d</string>
+    <string name="entry_title_conclusions">Disposizione %s</string>
+    <string name="text_copied_to_clipboard">Testo copiato nella clipboard.</string>
+    
+    <string name="added_to_fav">Articolo aggiunto ai preferiti</string>
+    <string name="removed_from_fav">Articolo rimosso dai preferiti</string>
 </resources>
