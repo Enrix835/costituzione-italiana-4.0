@@ -30,4 +30,6 @@
     
     <string name="added_to_fav">Articolo aggiunto ai preferiti</string>
     <string name="removed_from_fav">Articolo rimosso dai preferiti</string>
+    
+    <string name="menu_search">Cerca nella costituzione</string>
 </resources>

@@ -48,4 +48,11 @@ public class Util {
 				return null;
 		}
 	}
+	
+	public static boolean isOnlyNumeric(String str) {
+		for (char c : str.toCharArray()) {
+			if (c < 48 || c > 57) return false;
+		}
+		return true;
+	}
 }

@@ -1,6 +1,5 @@
 package com.zephyrteam.costituzione.util;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +122,13 @@ public class DatabaseHandler {
 		String title = SingleEntry.getTitleFromId(context, id);
 		
 		return new SingleEntry(title, text, id, category, favorite);
+    }
+    
+    public Cursor getSimilarEntries(String keyword) {
+    	String selection = CustomTable.BODY + " LIKE ?";
+    	String [] selectionArgs = { "%" + keyword + "%"};
+    	
+    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
     }
 }
 

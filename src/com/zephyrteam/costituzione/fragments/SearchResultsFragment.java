@@ -23,39 +23,33 @@ import java.util.List;
 
 import com.zephyrteam.costituzione.components.EntriesAdapter;
 import com.zephyrteam.costituzione.components.SingleEntry;
-import com.zephyrteam.costituzione.util.LoadUiTask;
+import com.zephyrteam.costituzione.util.LoadSearchResultsTask;
 
 import android.app.ListFragment;
 import android.os.Bundle;
 
-public class SubListsFragment extends ListFragment {
+public class SearchResultsFragment extends ListFragment {
 	List<SingleEntry> list;
 	
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
        
-	}
-	
-	@Override
-	public void onStart() {
-		super.onStart();
-		
-		LoadUiTask task = new LoadUiTask(getActivity(), this, getShownIndex());
+        LoadSearchResultsTask task = new LoadSearchResultsTask(getActivity(), this);
         task.execute();
 	}
 	
 	
-	 public static SubListsFragment newInstance(int index) {
-	     	SubListsFragment f = new SubListsFragment();
+	 public static SearchResultsFragment newInstance(String keyword) {
+	     	SearchResultsFragment f = new SearchResultsFragment();
 	        Bundle args = new Bundle();
-	        args.putInt("index", index);
+	        args.putString("keyword", keyword);
 	        f.setArguments(args);
 	        return f;
 	    }
 
-	    public int getShownIndex() {
-	        return getArguments().getInt("index", 0);
+	    public String getKeyword() {
+	        return getArguments().getString("keyword");
 	    }
 	    
 		public void setMyAdapter(EntriesAdapter adapter) {
