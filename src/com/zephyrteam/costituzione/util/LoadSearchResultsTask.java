@@ -24,16 +24,24 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 	@Override
 	protected EntriesAdapter doInBackground(Object... params) {
 		String keyword = fragment.getKeyword();
+		int category = fragment.getCallingCategory();
 		
 		DatabaseHandler dbh = new DatabaseHandler(activity);
 		dbh.open(false);
 		Cursor res = null;
 		
 		if (Util.isOnlyNumeric(keyword)) {
-			res = dbh.getEntryCursor(Integer.parseInt(keyword));
+			res = (category == -1) ? 
+					dbh.getEntry(Integer.parseInt(keyword)) : dbh.getEntry(Integer.parseInt(keyword), category);
+		} else if (keyword.contains("-")){
+			String[] range = keyword.split("-");
+			res = (category == -1) ? 
+					dbh.getRangeEntries(range[0], range[1]) : dbh.getRangeEntries(range[0], range[1], category);
 		}
+		
 		if (res == null) {
-			res = dbh.getSimilarEntries(keyword);
+			res = (category == -1) ?
+					dbh.getSimilarEntries(keyword) : dbh.getSimilarEntries(keyword, category);
 		}
 		
 		List<SingleEntry> list = dbh.getEntriesFromCursor(res);

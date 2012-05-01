@@ -21,18 +21,46 @@ package com.zephyrteam.costituzione;
 
 import com.zephyrteam.costituzione.fragments.SubListsFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
 
 public class SubListsActivity extends BasicActivity {
-
+	int index = -1;
+	SearchView mSearchView;
+	public MenuItem mSearchItem;
+	String initialQuery = null;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         if (savedInstanceState == null) {
             SubListsFragment details = new SubListsFragment();
             details.setArguments(getIntent().getExtras());
+            index = getIntent().getIntExtra(Constants.EXTRA_INDEX, -1);
             getFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
         }
     }
+   
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar_categories, menu);
+			
+        return true;
+    }
+    
+    public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+			case R.id.mainscreen_favorites:
+				Intent intent = new Intent(this, FavoritesActivity.class);
+				startActivity(intent);
+				break;
+		}
+		return true;
+	}
 }

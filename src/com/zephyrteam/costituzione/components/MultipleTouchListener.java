@@ -6,6 +6,7 @@ import java.util.List;
 import com.zephyrteam.costituzione.Constants;
 import com.zephyrteam.costituzione.DetailedActivity;
 import com.zephyrteam.costituzione.R;
+import com.zephyrteam.costituzione.SubListsActivity;
 import com.zephyrteam.costituzione.util.DatabaseHandler;
 
 import android.content.ClipData;
@@ -13,7 +14,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,6 +61,7 @@ public class MultipleTouchListener implements MultiChoiceModeListener {
 			return true;
 		}
 		
+		@SuppressWarnings("static-access")
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			Integer [] array = new Integer[selected.size()];
@@ -119,6 +120,7 @@ public class MultipleTouchListener implements MultiChoiceModeListener {
 		public class ItemClickListener implements AdapterView.OnItemClickListener {
 			List<SingleEntry> list;
 			Context context;
+			SubListsActivity activity;
 			
 			public ItemClickListener(Context context, List<SingleEntry> list) {
 				this.context = context;

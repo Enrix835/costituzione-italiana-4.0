@@ -2,14 +2,11 @@ package com.zephyrteam.costituzione.util;
 
 import java.util.List;
 
-import com.zephyrteam.costituzione.R;
 import com.zephyrteam.costituzione.components.EntriesAdapter;
 import com.zephyrteam.costituzione.components.MultipleTouchListener;
 import com.zephyrteam.costituzione.components.SingleEntry;
 import com.zephyrteam.costituzione.fragments.SubListsFragment;
 
-import android.app.ListFragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -32,7 +29,7 @@ public class LoadUiTask extends AsyncTask <SingleEntry, Integer, EntriesAdapter>
 	protected EntriesAdapter doInBackground(SingleEntry... arg0) {
 		DatabaseHandler dbh = new DatabaseHandler(mContext);
 		dbh.open(false);
-		Cursor data = dbh.getDataCursor(mCategory);
+		Cursor data = dbh.getCategory(mCategory);
 		List<SingleEntry> entries = dbh.getEntriesFromCursor(data);
 		
 		data.close();
@@ -52,7 +49,7 @@ public class LoadUiTask extends AsyncTask <SingleEntry, Integer, EntriesAdapter>
         mFragment.registerForContextMenu(mList);
         
         mList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        MultipleTouchListener listener = new MultipleTouchListener(adapter, mList, mContext);
+        MultipleTouchListener listener = new MultipleTouchListener(adapter, mList, mFragment.getActivity());
         
         mList.setMultiChoiceModeListener(listener);
         

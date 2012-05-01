@@ -21,6 +21,7 @@ package com.zephyrteam.costituzione.fragments;
 
 import java.util.List;
 
+import com.zephyrteam.costituzione.Constants;
 import com.zephyrteam.costituzione.components.EntriesAdapter;
 import com.zephyrteam.costituzione.components.SingleEntry;
 import com.zephyrteam.costituzione.util.LoadSearchResultsTask;
@@ -39,21 +40,29 @@ public class SearchResultsFragment extends ListFragment {
         task.execute();
 	}
 	
-	
 	 public static SearchResultsFragment newInstance(String keyword) {
+		 return newInstance(keyword, -1);
+	 }
+	
+	 public static SearchResultsFragment newInstance(String keyword, int category) {
 	     	SearchResultsFragment f = new SearchResultsFragment();
 	        Bundle args = new Bundle();
-	        args.putString("keyword", keyword);
+	        args.putString(Constants.EXTRA_KEYWORD, keyword);
+	        args.putInt(Constants.EXTRA_CATEGORY, category);
 	        f.setArguments(args);
 	        return f;
-	    }
+	   }
 
-	    public String getKeyword() {
-	        return getArguments().getString("keyword");
-	    }
+	   public String getKeyword() {
+	        return getArguments().getString(Constants.EXTRA_KEYWORD);
+	   }
+	   
+	   public int getCallingCategory() {
+		   return getArguments().getInt(Constants.EXTRA_CATEGORY, -1);
+	   }
 	    
-		public void setMyAdapter(EntriesAdapter adapter) {
+	   public void setMyAdapter(EntriesAdapter adapter) {
 			this.setListAdapter(adapter);
-		}
+	   }
 	
 }

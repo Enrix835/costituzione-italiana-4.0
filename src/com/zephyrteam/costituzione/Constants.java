@@ -27,10 +27,17 @@ public final class Constants {
 	public final static int DB_VERSION = 1;
 	public final static String DB_NAME = "costituzione.db";
 	public final static String DB_TABLE = "articoli";
+	public final static boolean DB_SHOULD_UPDATE = false;
+	
+	public final static String PREF_KEY = "costituzione";
+	public final static String PREF_DB_UPDATED = "db-updated-";
 	
 	public final static int DB_COLUMN_ID = 0;
 	public final static int DB_COLUMN_BODY = 1;
 	public final static int DB_COLUMN_CATEGORY = 2;
 	public final static int DB_COLUMN_FAVORITE = 3;
 	
+	public static final String EXTRA_KEYWORD = "keyword";
+	public static final String EXTRA_CATEGORY = "category";
+	public static final String EXTRA_INDEX = "index";
 }

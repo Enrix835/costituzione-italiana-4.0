@@ -45,15 +45,16 @@ public class DatabaseHandler {
     }
     
     public Cursor getDataCursor() {
-    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, null, null, null, null, null);
+        return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, null, null, null, null, null);
     }
     
-    public Cursor getDataCursor(int category) {
+    
+    public Cursor getCategory(int category) {
     	String SELECTION = CustomTable.CATEGORY + "=" + category;
     	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, SELECTION, null, null, null, null);
     }
     
-    public Cursor getEntryCursor(int id) {
+    public Cursor getEntry(int id) {
     	String SELECTION = CustomTable._ID + "=" + id;
     	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, SELECTION, null, null, null, null);
     }
@@ -63,25 +64,41 @@ public class DatabaseHandler {
     	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, SELECTION, null, null, null, null);
     }
     
-    public Cursor getCategoryCursor(int category) {
-    	return null;
+    public Cursor getSimilarEntries(String keyword) {
+    	String selection = CustomTable.BODY + " LIKE ?";
+    	String [] selectionArgs = { "%" + keyword + "%"};
+    	
+    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
     }
     
-    private class DatabaseHelper extends SQLiteOpenHelper {
-   	 	public DatabaseHelper(Context context, String name, CursorFactory factory, int version) {
-                super(context, name, null, version);
-        }
-
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        	//NOTHING ATM
-        }
-
-		@Override
-		public void onCreate(SQLiteDatabase arg0) {
-			//NOTHING ATM
-		}
+    public Cursor getRangeEntries(String from, String to) {
+    	String selection = CustomTable._ID + " BETWEEN ? AND ?";
+    	String[] selectionArgs = { from, to };
+    	
+    	
+    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
     }
     
+    public Cursor getSimilarEntries(String keyword, int category) {
+    	String selection = CustomTable.BODY + " LIKE ? AND " + CustomTable.CATEGORY + "=?";
+    	String [] selectionArgs = { "%" + keyword + "%", ""+category };
+    	
+    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
+    }
+    
+    public Cursor getRangeEntries(String from, String to, int category) {
+    	String selection = CustomTable.CATEGORY + "=? AND " + CustomTable._ID + " BETWEEN ? AND ?";
+    	String[] selectionArgs = { ""+category, from, to };
+    	
+    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
+    }
+    
+    public Cursor getEntry(int id, int category) {
+    	String selection = CustomTable.CATEGORY + "=? AND " + CustomTable._ID + "=?";
+    	String[] selectionArgs = { ""+category, ""+id };
+    	
+    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
+    }
     
     public List<SingleEntry> getEntriesFromCursor(Cursor cur) {
     	List<SingleEntry> list = new ArrayList<SingleEntry>();
@@ -113,7 +130,7 @@ public class DatabaseHandler {
     }
     
     public SingleEntry getSingleEntry(int id) {
-    	Cursor cur = getEntryCursor(id);
+    	Cursor cur = getEntry(id);
     	cur.moveToFirst();
     	
     	int category = cur.getInt(Constants.DB_COLUMN_CATEGORY);
@@ -124,11 +141,20 @@ public class DatabaseHandler {
 		return new SingleEntry(title, text, id, category, favorite);
     }
     
-    public Cursor getSimilarEntries(String keyword) {
-    	String selection = CustomTable.BODY + " LIKE ?";
-    	String [] selectionArgs = { "%" + keyword + "%"};
-    	
-    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
+
+    private class DatabaseHelper extends SQLiteOpenHelper {
+   	 	public DatabaseHelper(Context context, String name, CursorFactory factory, int version) {
+                super(context, name, null, version);
+        }
+
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        	//NOTHING ATM
+        }
+
+		@Override
+		public void onCreate(SQLiteDatabase arg0) {
+			//NOTHING ATM
+		}
     }
 }
 

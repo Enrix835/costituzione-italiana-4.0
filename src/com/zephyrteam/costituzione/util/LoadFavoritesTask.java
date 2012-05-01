@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.zephyrteam.costituzione.components.EntriesAdapter;
 import com.zephyrteam.costituzione.components.MultipleFavoriteTouchListener;
-import com.zephyrteam.costituzione.components.MultipleTouchListener;
 import com.zephyrteam.costituzione.components.SingleEntry;
 import com.zephyrteam.costituzione.fragments.FavoritesFragment;
 

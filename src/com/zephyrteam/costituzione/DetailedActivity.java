@@ -70,7 +70,8 @@ public class DetailedActivity extends BasicActivity {
     	return true;
     }
     
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @SuppressWarnings("static-access")
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 			case R.id.copy_entry:
 				String toCopy = mEntry.getTitle() + ": \n" + mEntry.getBody().replace("\n\n", "\n");

@@ -19,6 +19,7 @@
 
 package com.zephyrteam.costituzione.fragments;
 
+import com.zephyrteam.costituzione.Constants;
 import com.zephyrteam.costituzione.R;
 import com.zephyrteam.costituzione.SubListsActivity;
 import com.zephyrteam.costituzione.components.Categories;
@@ -92,7 +93,7 @@ public class ListsFragment extends ListFragment {
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), SubListsActivity.class);
-            intent.putExtra("index", index);
+            intent.putExtra(Constants.EXTRA_INDEX, index);
             startActivity(intent);
         }
     }
