@@ -25,10 +25,10 @@ import com.zephyrteam.costituzione.SubListsActivity;
 import com.zephyrteam.costituzione.components.Categories;
 import com.zephyrteam.costituzione.components.TitlesAdapter;
 
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView; 
 
@@ -80,7 +80,7 @@ public class ListsFragment extends ListFragment {
             //getListView().setItemChecked(index, true);
 
            	SubListsFragment details = (SubListsFragment)
-                    getFragmentManager().findFragmentById(R.id.details);
+                    getActivity().getSupportFragmentManager().findFragmentById(R.id.details);
             if (details == null || details.getShownIndex() != index) {
                 details = SubListsFragment.newInstance(index);
  

@@ -42,7 +42,7 @@ public class SubListsActivity extends BasicActivity {
             SubListsFragment details = new SubListsFragment();
             details.setArguments(getIntent().getExtras());
             index = getIntent().getIntExtra(Constants.EXTRA_INDEX, -1);
-            getFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+            getSupportFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
         }
     }
    

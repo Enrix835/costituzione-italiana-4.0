@@ -22,8 +22,8 @@ package com.zephyrteam.costituzione.fragments;
 import com.zephyrteam.costituzione.R;
 import com.zephyrteam.costituzione.components.SingleEntry;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,15 +45,14 @@ public class DetailedFragment extends Fragment {
         if (container == null) {
             return null;
         }
-
-        View main = inflater.inflate(R.layout.detailed_view, container, true);
+        View main = inflater.inflate(R.layout.detailed_view, container, false);
         
-        mTitleView = (TextView) main.findViewById(R.id.detailed_title_view);
-        mBodyView = (TextView) main.findViewById(R.id.detailed_body_view);
+        mTitleView = (TextView)main.findViewById(R.id.detailed_title_view);
+        mBodyView = (TextView)main.findViewById(R.id.detailed_body_view);
         
-        mTitleView.setText(mEntry.getTitle());
         mBodyView.setText(mEntry.getBody());
+        mTitleView.setText(mEntry.getTitle());
         
-        return null;
+        return main;
     }
 }

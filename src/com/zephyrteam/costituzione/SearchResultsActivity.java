@@ -2,11 +2,11 @@ package com.zephyrteam.costituzione;
 
 import com.zephyrteam.costituzione.fragments.SearchResultsFragment;
 
-import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +25,7 @@ public class SearchResultsActivity extends BasicActivity {
 			
 			SearchResultsFragment fragment = 
 					(data != null) ? SearchResultsFragment.newInstance(keyword, data.getInt("category", -1)) : SearchResultsFragment.newInstance(keyword);
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(android.R.id.content, fragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();

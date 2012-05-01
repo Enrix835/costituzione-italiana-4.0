@@ -19,11 +19,11 @@
 
 package com.zephyrteam.costituzione;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-public class BasicActivity extends Activity {
+public class BasicActivity extends FragmentActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstance) {

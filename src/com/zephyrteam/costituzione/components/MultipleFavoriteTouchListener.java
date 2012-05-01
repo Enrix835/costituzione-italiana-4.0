@@ -129,8 +129,22 @@ public class MultipleFavoriteTouchListener implements MultiChoiceModeListener {
 				Intent intent = new Intent(context, DetailedActivity.class);
 				SingleEntry entry = list.get(position);
 				intent.putExtra("id", entry.getId());
+				intent.putExtra("idlist", getEntriesListString());
 				context.startActivity(intent);
 		    }
+			
+			public String getEntriesListString() {
+				SingleEntry[] entries = new SingleEntry[list.size()];
+				String ret = "-";
+				
+				entries = list.toArray(entries);
+				
+				for(SingleEntry entry : entries) {
+					ret += "-" + entry.getId();
+				}
+				
+				return ret.replace("--", "");
+			}
 			
 		}
     

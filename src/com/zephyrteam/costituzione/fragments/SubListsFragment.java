@@ -25,8 +25,8 @@ import com.zephyrteam.costituzione.components.EntriesAdapter;
 import com.zephyrteam.costituzione.components.SingleEntry;
 import com.zephyrteam.costituzione.util.LoadUiTask;
 
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 
 public class SubListsFragment extends ListFragment {
 	List<SingleEntry> list;

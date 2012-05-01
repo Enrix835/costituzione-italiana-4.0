@@ -19,49 +19,74 @@
 
 package com.zephyrteam.costituzione;
 
+import java.util.List;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
+import com.viewpagerindicator.TitlePageIndicator;
+import com.zephyrteam.costituzione.components.DetailedFragmentAdapter;
 import com.zephyrteam.costituzione.components.SingleEntry;
-import com.zephyrteam.costituzione.fragments.DetailedFragment;
 import com.zephyrteam.costituzione.util.DatabaseHandler;
 
-public class DetailedActivity extends BasicActivity {
+public class DetailedActivity extends BasicActivity implements OnPageChangeListener {
 	SingleEntry mEntry;
+	ViewPager vp;
 	ShareActionProvider mShareProvider;
+	int id, position;
+	List<SingleEntry> list;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.detailed_container);
+        vp = (ViewPager) findViewById(R.id.pager);
+        
         if (savedInstanceState == null) {
         	Bundle data = getIntent().getExtras();
         	
-        	int id = data.getInt("id");
-        	Log.d("DBG", "ID:= " + id);
-        	DatabaseHandler dbh = new DatabaseHandler(this);
-        	dbh.open(false);
-        	mEntry = dbh.getSingleEntry(id);
-        	dbh.close();
+        	id = data.getInt("id");
+        	String idlist = data.getString("idlist");
         	
-        	DetailedFragment df = new DetailedFragment(mEntry);
-            getFragmentManager().beginTransaction().replace(android.R.id.content, df).commit();
+        	String[] ids = idlist.split("-");
+    		int[] nids = new int[ids.length];
+    		
+    		for (int i = 0; i < ids.length; i++) {
+    			nids[i] = Integer.parseInt(ids[i]);
+    			if (nids[i] == id) position = i;
+    		}
+    		
+    		DatabaseHandler dbh = new DatabaseHandler(this);
+    		dbh.open(false);
+    		list = dbh.getListOfEntries(nids);
+    		dbh.close();
+    		
+    		DetailedFragmentAdapter fa = new DetailedFragmentAdapter(getSupportFragmentManager(), list, this);
+    		vp.setAdapter(fa);
+    		
+    		TitlePageIndicator tpi = (TitlePageIndicator)findViewById(R.id.indicator);
+    		tpi.setViewPager(vp);
+    		
+    		vp.setCurrentItem(position, true);
+    		tpi.setOnPageChangeListener(this);
+    		
         }
     } 
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	getMenuInflater().inflate(R.menu.actionbar_details, menu);
-    	if (mEntry == null) return false;
     	
+    	mEntry = list.get(vp.getCurrentItem());
     	updateFavoriteButton(menu.findItem(R.id.favourite_status));
     	
     	MenuItem shareItem = menu.findItem(R.id.menu_item_share);
@@ -113,4 +138,18 @@ public class DetailedActivity extends BasicActivity {
     	favorite.setIcon(icon).setTitle(title);
 
     }
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+	}
+
+	@Override
+	public void onPageSelected(int arg0) {
+		invalidateOptionsMenu();
+	}
+    
 }

@@ -2,8 +2,8 @@ package com.zephyrteam.costituzione.fragments;
 
 import com.zephyrteam.costituzione.util.LoadFavoritesTask;
 
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 
 public class FavoritesFragment extends ListFragment {
 	@Override

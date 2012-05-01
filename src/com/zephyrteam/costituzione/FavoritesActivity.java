@@ -12,7 +12,7 @@ public class FavoritesActivity extends BasicActivity {
 
 	        if (savedInstanceState == null) {
 	        	FavoritesFragment frag = new FavoritesFragment();
-	            getFragmentManager().beginTransaction().add(android.R.id.content, frag).commit();
+	            getSupportFragmentManager().beginTransaction().add(android.R.id.content, frag).commit();
 	        }
 	    }
 }

@@ -100,6 +100,15 @@ public class DatabaseHandler {
     	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
     }
     
+    public List<SingleEntry> getListOfEntries(int[] ids) {
+    	List<SingleEntry> mList = new ArrayList<SingleEntry>();
+    	for (int id : ids) {
+    		mList.add(getEntriesFromCursor(getEntry(id)).get(0));
+    	}
+    	
+    	return mList;
+    }
+    
     public List<SingleEntry> getEntriesFromCursor(Cursor cur) {
     	List<SingleEntry> list = new ArrayList<SingleEntry>();
     	
