@@ -30,7 +30,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
-public class SubListsActivity extends BasicActivity {
+public class SubListsActivity extends BasicActivity implements SearchView.OnQueryTextListener {
 	int index = -1;
 	SearchView mSearchView;
 	public MenuItem mSearchItem;
@@ -57,27 +57,7 @@ public class SubListsActivity extends BasicActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(true);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-			
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				Intent intent = new Intent(Intent.ACTION_SEARCH);
-				intent.setClass(SubListsActivity.this, SearchResultsActivity.class);
-				Bundle extraData = new Bundle();
-				extraData.putInt(Constants.EXTRA_CATEGORY, index);
-				extraData.putString(SearchManager.QUERY, query);
-				
-				intent.putExtras(extraData);
-				startActivity(intent);
-				
-				return true;
-			}
-			
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				return false;
-			}
-		});
+        searchView.setOnQueryTextListener(this);
         
         return true;
     }
@@ -89,6 +69,27 @@ public class SubListsActivity extends BasicActivity {
 				startActivity(intent);
 				break;
 		}
+		return true;
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		//We override standard Android search button. We need to pass some app-specific values to the SearchResultActivity.
+		Intent intent = new Intent(Intent.ACTION_SEARCH);
+		intent.setClass(SubListsActivity.this, SearchResultsActivity.class);
+		Bundle extraData = new Bundle();
+		extraData.putInt(Constants.EXTRA_CATEGORY, index);
+		extraData.putString(SearchManager.QUERY, query);
+		
+		intent.putExtras(extraData);
+		startActivity(intent);
+		
+		//returning true tells Android that we did the trick instead of let the system do it.
 		return true;
 	}
 }
