@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/copy_entry"
-        android:showAsAction="ifRoom"
-        android:icon="@drawable/content_copy" 
-        
-        />
+        android:showAsAction="always"
+        android:icon="@drawable/content_copy" />
+    
     <item android:id="@+id/favourite_status"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
+    
     <item android:id="@+id/menu_item_share"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="Share"
         android:actionProviderClass="android.widget.ShareActionProvider" />
 </menu>

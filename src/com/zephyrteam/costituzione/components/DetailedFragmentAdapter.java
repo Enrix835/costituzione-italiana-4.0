@@ -23,7 +23,6 @@ public class DetailedFragmentAdapter extends FragmentPagerAdapter implements Tit
 		mFragments = new DetailedFragment[mList.length];
 		for (int i = 0; i < mList.length; i++) {
 			mFragments[i] = new DetailedFragment(mList[i]);
-			mFragments[i].setHasOptionsMenu(true);
 		}
 	}
 

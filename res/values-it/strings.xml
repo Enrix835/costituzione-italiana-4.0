@@ -37,4 +37,6 @@
     <string name="warning_dbtoupdate_title">Attenzione!</string>
     <string name="warning_dbtoupdate_msg">Attenzione, il database ha bisogno di essere aggiornato. L\'operazione sovrascriverà i preferiti, ma si consiglia di procedere. Si desidera procedere?</string>
 	<string name="warning_dbtoupdate_never">Mai</string>
+	
+	<string name="app_name">Costituzione Italiana</string>
 </resources>

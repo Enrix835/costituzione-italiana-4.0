@@ -25,6 +25,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -33,22 +34,27 @@ import android.view.MenuItem;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
-import com.viewpagerindicator.TitlePageIndicator;
-import com.zephyrteam.costituzione.components.DetailedFragmentAdapter;
 import com.zephyrteam.costituzione.components.SingleEntry;
 import com.zephyrteam.costituzione.util.DatabaseHandler;
+import com.zephyrteam.costituzione.util.LoadViewPagerTask;
+import com.zephyrteam.costituzione.util.Util;
 
 public class DetailedActivity extends BasicActivity implements OnPageChangeListener {
 	SingleEntry mEntry;
 	ViewPager vp;
 	ShareActionProvider mShareProvider;
-	int id, position;
-	List<SingleEntry> list;
+	public int id, position;
+	boolean mIsTablet;
+	public List<SingleEntry> list;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_container);
+        
+        mIsTablet = Util.isTabletDevice(this);
+        heuristicSetTytle(getResources().getConfiguration());
+        
         vp = (ViewPager) findViewById(R.id.pager);
         
         if (savedInstanceState == null) {
@@ -57,27 +63,8 @@ public class DetailedActivity extends BasicActivity implements OnPageChangeListe
         	id = data.getInt("id");
         	String idlist = data.getString("idlist");
         	
-        	String[] ids = idlist.split("-");
-    		int[] nids = new int[ids.length];
-    		
-    		for (int i = 0; i < ids.length; i++) {
-    			nids[i] = Integer.parseInt(ids[i]);
-    			if (nids[i] == id) position = i;
-    		}
-    		
-    		DatabaseHandler dbh = new DatabaseHandler(this);
-    		dbh.open(false);
-    		list = dbh.getListOfEntries(nids);
-    		dbh.close();
-    		
-    		DetailedFragmentAdapter fa = new DetailedFragmentAdapter(getSupportFragmentManager(), list, this);
-    		vp.setAdapter(fa);
-    		
-    		TitlePageIndicator tpi = (TitlePageIndicator)findViewById(R.id.indicator);
-    		tpi.setViewPager(vp);
-    		
-    		vp.setCurrentItem(position, true);
-    		tpi.setOnPageChangeListener(this);
+        	LoadViewPagerTask task = new LoadViewPagerTask(this, id, idlist, vp);
+        	task.execute();
     		
         }
     } 
@@ -86,10 +73,13 @@ public class DetailedActivity extends BasicActivity implements OnPageChangeListe
     public boolean onCreateOptionsMenu(Menu menu) {
     	getMenuInflater().inflate(R.menu.actionbar_details, menu);
     	
-    	mEntry = list.get(vp.getCurrentItem());
-    	updateFavoriteButton(menu.findItem(R.id.favourite_status));
+    	if (list == null) return false;
     	
+    	mEntry = list.get(vp.getCurrentItem());
+    	
+    	updateFavoriteButton(menu.findItem(R.id.favourite_status));
     	MenuItem shareItem = menu.findItem(R.id.menu_item_share);
+    	
     	mShareProvider = (ShareActionProvider) shareItem.getActionProvider();
     	mShareProvider.setShareIntent(getShareIntent());
     	return true;
@@ -136,7 +126,6 @@ public class DetailedActivity extends BasicActivity implements OnPageChangeListe
     	int title = isFav ? R.string.remove_from_fav : R.string.add_to_fav;
     	
     	favorite.setIcon(icon).setTitle(title);
-
     }
 
 	@Override
@@ -151,5 +140,31 @@ public class DetailedActivity extends BasicActivity implements OnPageChangeListe
 	public void onPageSelected(int arg0) {
 		invalidateOptionsMenu();
 	}
+	
+	public void heuristicSetTytle(Configuration config) {
+		if (mIsTablet) {
+			setTitle(R.string.app_name);
+		} else {
+			int orientation = config.orientation;
+			switch(orientation) {
+				case Configuration.ORIENTATION_LANDSCAPE:
+				case Configuration.ORIENTATION_SQUARE:
+					setTitle(R.string.app_name);
+					break;
+				case Configuration.ORIENTATION_PORTRAIT:
+					setTitle(null);
+					break;
+				default:
+					setTitle(R.string.app_name);
+					break;
+			}
+		}
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+    	super.onConfigurationChanged(newConfig);
+    	heuristicSetTytle(newConfig);
+    }
     
 }

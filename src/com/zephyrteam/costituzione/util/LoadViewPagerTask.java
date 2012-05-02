@@ -10,19 +10,19 @@ import com.zephyrteam.costituzione.components.SingleEntry;
 
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
-@SuppressWarnings("rawtypes")
 public class LoadViewPagerTask extends AsyncTask<Object, Object, List<SingleEntry>> {
 	int currId;
 	String idList;
 	DetailedActivity activity;
 	int position = 0;
+	ViewPager vp;
 	
-	public LoadViewPagerTask(DetailedActivity activity, int id, String idlist) {
+	public LoadViewPagerTask(DetailedActivity activity, int id, String idlist, ViewPager vp) {
 		this.activity = activity;
 		currId = id;
 		idList = idlist;
+		this.vp = vp;
 	}
 	
 	@Override
@@ -35,6 +35,8 @@ public class LoadViewPagerTask extends AsyncTask<Object, Object, List<SingleEntr
 			if (nids[i] == currId) position = i;
 		}
 		
+		activity.position = position;
+		
 		DatabaseHandler dbh = new DatabaseHandler(activity);
 		dbh.open(false);
 		List<SingleEntry> list = dbh.getListOfEntries(nids);
@@ -44,7 +46,8 @@ public class LoadViewPagerTask extends AsyncTask<Object, Object, List<SingleEntr
 	}
 	
 	public void onPostExecute(List<SingleEntry> result) {
-		ViewPager vp = (ViewPager) activity.findViewById(R.id.pager);
+		activity.list = result;
+		
 		DetailedFragmentAdapter fa = new DetailedFragmentAdapter(activity.getSupportFragmentManager(), result, activity);
 		vp.setAdapter(fa);
 		
@@ -53,8 +56,9 @@ public class LoadViewPagerTask extends AsyncTask<Object, Object, List<SingleEntr
 		
 		vp.setCurrentItem(position, true);
 		
-		vp.setOnPageChangeListener(activity);
 		tpi.setOnPageChangeListener(activity);
+		
+		activity.invalidateOptionsMenu();
 	}
 
 }

@@ -33,7 +33,11 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 		if (Util.isOnlyNumeric(keyword)) {
 			res = (category == -1) ? 
 					dbh.getEntry(Integer.parseInt(keyword)) : dbh.getEntry(Integer.parseInt(keyword), category);
-		} else if (keyword.contains("-")){
+		
+		} else if (Util.isOnlyRomanNumber(keyword)) {
+			res = dbh.getEntry(Util.getCategoryRomanInt(keyword));
+			
+		}else if (keyword.contains("-")){
 			String[] range = keyword.split("-");
 			res = (category == -1) ? 
 					dbh.getRangeEntries(range[0], range[1]) : dbh.getRangeEntries(range[0], range[1], category);
