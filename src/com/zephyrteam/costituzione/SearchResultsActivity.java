@@ -21,10 +21,9 @@ public class SearchResultsActivity extends BasicActivity {
 		
 		if (callingIntent.getAction().equals(Intent.ACTION_SEARCH)) {
 			String keyword = callingIntent.getStringExtra(SearchManager.QUERY);
-			Bundle data = callingIntent.getBundleExtra(SearchManager.APP_DATA);
+			int category = callingIntent.getIntExtra(Constants.EXTRA_CATEGORY, -1);
 			
-			SearchResultsFragment fragment = 
-					(data != null) ? SearchResultsFragment.newInstance(keyword, data.getInt("category", -1)) : SearchResultsFragment.newInstance(keyword);
+			SearchResultsFragment fragment = SearchResultsFragment.newInstance(keyword, category);
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(android.R.id.content, fragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -41,6 +40,7 @@ public class SearchResultsActivity extends BasicActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(true);
+        
         return true;
     }
     

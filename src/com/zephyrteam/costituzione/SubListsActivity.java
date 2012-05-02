@@ -21,6 +21,8 @@ package com.zephyrteam.costituzione;
 
 import com.zephyrteam.costituzione.fragments.SubListsFragment;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -49,8 +51,34 @@ public class SubListsActivity extends BasicActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_categories, menu);
+        inflater.inflate(R.menu.actionbar_mainscreen, menu);
+		
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				Intent intent = new Intent(Intent.ACTION_SEARCH);
+				intent.setClass(SubListsActivity.this, SearchResultsActivity.class);
+				Bundle extraData = new Bundle();
+				extraData.putInt(Constants.EXTRA_CATEGORY, index);
+				extraData.putString(SearchManager.QUERY, query);
+				
+				intent.putExtras(extraData);
+				startActivity(intent);
+				
+				return true;
+			}
+			
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+		});
+        
         return true;
     }
     
