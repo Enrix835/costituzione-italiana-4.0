@@ -65,9 +65,6 @@ public class SearchResultsActivity extends BasicActivity {
     
     public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
-			case R.id.search:
-				onSearchRequested();
-				break;
 			case R.id.mainscreen_favorites:
 				Intent intent = new Intent(this, FavoritesActivity.class);
 				startActivity(intent);

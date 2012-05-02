@@ -119,10 +119,49 @@ public class DatabaseHandler {
     	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, selectionArgs, null, null, null);
     }
     
+    public Cursor getEntries(int[] id) {
+    	String selection = CustomTable._ID + " IN (";
+    	
+    	for (int i = 0; i < id.length; i++) {
+    		String toAdd = "" + id[i];
+    		if (i != (id.length - 1)) {
+    			toAdd += ", ";
+    		}
+    		selection += toAdd;
+    	}
+    	selection += ")";
+    	
+    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, null, null, null, null);
+    }
+    
+    public Cursor getEntries(int[] id, int category) {
+    	String selection = CustomTable.CATEGORY + "=" + category + " AND "+ CustomTable._ID + " IN (";
+    	
+    	for (int i = 0; i < id.length; i++) {
+    		String toAdd = "" + id[i];
+    		if (i != (id.length - 1)) {
+    			toAdd += ", ";
+    		}
+    		selection += toAdd;
+    	}
+    	selection += ")";
+    	
+    	return db.query(Constants.DB_TABLE, CustomTable.COLUMNS, selection, null, null, null, null);
+    }
+    
     public List<SingleEntry> getListOfEntries(int[] ids) {
     	List<SingleEntry> mList = new ArrayList<SingleEntry>();
     	for (int id : ids) {
     		mList.add(getEntriesFromCursor(getEntry(id)).get(0));
+    	}
+    	
+    	return mList;
+    }
+    
+    public List<SingleEntry> getListOfEntries(int[] ids, int category) {
+    	List<SingleEntry> mList = new ArrayList<SingleEntry>();
+    	for (int id : ids) {
+    		mList.add(getEntriesFromCursor(getEntry(id, category)).get(0));
     	}
     	
     	return mList;

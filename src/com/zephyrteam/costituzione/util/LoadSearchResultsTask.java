@@ -45,6 +45,8 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 		String keyword = fragment.getKeyword();
 		int category = fragment.getCallingCategory();
 		
+		List<SingleEntry> list = null;
+		
 		DatabaseHandler dbh = new DatabaseHandler(activity);
 		dbh.open(false);
 		Cursor res = null;
@@ -56,10 +58,14 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 		} else if (Util.isOnlyRomanNumber(keyword)) {
 			res = dbh.getEntry(Util.getCategoryRomanInt(keyword));
 			
-		}else if (keyword.contains("-")){
+		} else if (keyword.contains("-")){
 			String[] range = keyword.split("-");
 			res = (category == -1) ? 
 					dbh.getRangeEntries(range[0], range[1]) : dbh.getRangeEntries(range[0], range[1], category);
+		
+		} else if (Util.isAList(keyword)) {
+			res = (category == -1) ?
+					dbh.getEntries(Util.getListOfEntries(keyword)) : dbh.getEntries(Util.getListOfEntries(keyword), category);		
 		}
 		
 		if (res == null) {
@@ -67,7 +73,8 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 					dbh.getSimilarEntries(keyword) : dbh.getSimilarEntries(keyword, category);
 		}
 		
-		List<SingleEntry> list = dbh.getEntriesFromCursor(res);
+		list = dbh.getEntriesFromCursor(res);
+		
 		res.close();
 		dbh.close();
 		

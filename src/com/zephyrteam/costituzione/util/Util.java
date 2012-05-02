@@ -128,6 +128,29 @@ public class Util {
 		return (x > 139 && x < 158);
 	}
 	
+	public static boolean isAList(String str) {
+		if (!str.contains(",")) return false;
+		
+		String [] tmp = str.replace(" ", "").split(",");
+		
+		for(String s : tmp) {
+			if(!isOnlyNumeric(s)) return false;
+		}
+		return true;
+	}
+	
+	public static int[] getListOfEntries(String list) {
+		String [] tmp = list.replace(" ,", ",").replace(", ", "").split(",");
+		
+		int[] ret = new int[tmp.length];
+		
+		for(int i = 0; i < tmp.length; i++) {
+			ret[i] = Integer.parseInt(tmp[i]);
+		}
+		
+		return ret;
+	}
+	
 	public static boolean isTabletDevice(Activity activity) {
 	    // Verifies if the Generalized Size of the device is XLARGE to be considered a Tablet
 	    boolean xlarge = ((activity.getResources().getConfiguration().screenLayout & 
