@@ -58,14 +58,18 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 		} else if (Util.isOnlyRomanNumber(keyword)) {
 			res = dbh.getEntry(Util.getCategoryRomanInt(keyword));
 			
-		} else if (keyword.contains("-")){
+		} else if (Util.isRange(keyword)){
 			String[] range = keyword.split("-");
 			res = (category == -1) ? 
 					dbh.getRangeEntries(range[0], range[1]) : dbh.getRangeEntries(range[0], range[1], category);
 		
-		} else if (Util.isAList(keyword)) {
+		} else if (Util.isList(keyword)) {
 			res = (category == -1) ?
 					dbh.getEntries(Util.getListOfEntries(keyword)) : dbh.getEntries(Util.getListOfEntries(keyword), category);		
+		
+		} else if (Util.isRangeList(keyword)) {
+			res = (category == -1) ?
+					dbh.getEntries(Util.getRangeListOfEntries(keyword)) : dbh.getEntries(Util.getRangeListOfEntries(keyword), category);		
 		}
 		
 		if (res == null) {

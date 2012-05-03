@@ -19,6 +19,9 @@
 
 package com.zephyrteam.costituzione.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
@@ -128,7 +131,21 @@ public class Util {
 		return (x > 139 && x < 158);
 	}
 	
-	public static boolean isAList(String str) {
+	public static boolean isRange(String str) {
+		if (!str.contains("-")) return false;
+		
+		String[] tmp = str.split("-");
+		
+		try {
+			int min = Integer.parseInt(tmp[0]);
+			int max = Integer.parseInt(tmp[1]);
+			return (max >= min);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	public static boolean isList(String str) {
 		if (!str.contains(",")) return false;
 		
 		String [] tmp = str.replace(" ", "").split(",");
@@ -139,8 +156,18 @@ public class Util {
 		return true;
 	}
 	
+	public static boolean isRangeList(String str) {
+		if (!str.contains(",") || !str.contains("-")) return false;
+		String [] tmp = str.replace(" ,", ",").replace(", ", ",").split(",");
+		
+		for(String s : tmp) {
+			if(!isOnlyNumeric(s) && !isRange(s)) return false;
+		}
+		return true;
+	}
+	
 	public static int[] getListOfEntries(String list) {
-		String [] tmp = list.replace(" ,", ",").replace(", ", "").split(",");
+		String [] tmp = list.replace(" ,", ",").replace(", ", ",").split(",");
 		
 		int[] ret = new int[tmp.length];
 		
@@ -149,6 +176,35 @@ public class Util {
 		}
 		
 		return ret;
+	}
+	
+	public static int[] getRangeListOfEntries(String list) {
+		List<Integer> ret = new ArrayList<Integer>();
+		String [] tmp = list.replace(" ,", ",").replace(", ", ",").split(",");
+		
+		if (!list.contains("-")) return getListOfEntries(list);
+		
+		for (int i = 0; i < tmp.length; i++) {
+			if (Util.isOnlyNumeric(tmp[i])) {
+				ret.add(Integer.parseInt(tmp[i]));
+			} else if (Util.isRange(tmp[i])) {
+				String[] range = tmp[i].split("-");
+				int min = Integer.parseInt(range[0]);
+				int max = Integer.parseInt(range[1]);
+				
+				for (int x = min; x <= max; x++) {
+					ret.add(x);
+				}
+			}
+		}
+		
+		int []toRet = new int[ret.size()];
+		
+		for(int i = 0; i < toRet.length; i++) {
+			toRet[i] = (int)ret.get(i);
+		}
+		
+		return toRet;
 	}
 	
 	public static boolean isTabletDevice(Activity activity) {
