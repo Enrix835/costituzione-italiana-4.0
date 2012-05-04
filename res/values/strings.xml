@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="app_name">Costituzione Italiana</string>
+	<string name="app_version">0.9-beta</string>
+	
 	<string name="remove_from_fav">Remove from favorites</string>
     <string name="add_to_fav">Add to favorites</string>
     <string name="favorites">Favorites</string> 
@@ -38,5 +41,10 @@
     <string name="warning_dbtoupdate_msg">Warning! The database needs to be updated, but it must be overwriten. This means that you will loose any preference. Are you sure?</string>
 	<string name="warning_dbtoupdate_never">Never</string>
 	
-	<string name="app_name">Costituzione Italiana</string>
+	<string name="search_results_zero">No result for \"%s\"</string>
+	
+	<plurals name="search_results" formatted="true">
+	    <item quantity="one">One result for \"%1$s\"</item>
+	    <item quantity="other">%1$d results for \"%2$s\"</item>
+	</plurals>
 </resources>
