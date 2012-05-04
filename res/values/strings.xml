@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">Costituzione</string>
-	
-    <string name="remove_from_fav">Remove from Favorites</string>
-    <string name="add_to_fav">Add to Favorites</string>
-    <string name="favorites">Favorites</string>
-    <string name="wait_dialog">Wait</string>
+	<string name="remove_from_fav">Remove from favorites</string>
+    <string name="add_to_fav">Add to favorites</string>
+    <string name="favorites">Favorites</string> 
+    <string name="wait_dialog">Wait…</string>
+    <string name="list_favorites_status">Indicator for favorite status.</string>
     
-    <string name="list_favorites_status">Indicator for the favorite status</string>
-    <string name="text_copied_to_clipboard">Text copied to clipboard.</string> 
+    <string name="categories_0">Principi fondamentali</string>
+    <string name="categories_1">Rapporti civili</string>
+    <string name="categories_2">Rapporti etico-sociali</string>
+    <string name="categories_3">Rapporti economici</string>
+    <string name="categories_4">Rapporti politici</string>
+    <string name="categories_5">Il Parlamento</string>
+    <string name="categories_6">Il Presidente della Repubblica</string>
+    <string name="categories_7">Il Governo</string>
+    <string name="categories_8">La Magistratura</string>
+    <string name="categories_9">Regioni, Provincie e Comuni</string>
+    <string name="categories_10">Garanzie costituzionali</string>
+    <string name="categories_11">Disposizioni finali e transitorie</string>
     
-    <string name="entry_title_article">Article %d</string>
+    <string name="part_0">PREAMBOLO</string>
+    <string name="part_1">DIRITTI E DOVERI DEI CITTADINI</string>
+    <string name="part_2">ORDINAMENTO DELLA REPUBBLICA</string>
+    <string name="part_3">CONCLUSIONE</string>
+    
+    <string name="entry_title_article">Articole %d</string>
     <string name="entry_title_conclusions">Disposition %s</string>
+    <string name="text_copied_to_clipboard">Text copied to clipboard</string>
     
-    <string name="added_to_fav">Added to favorites</string>
-    <string name="removed_from_fav">Removed from favorites</string>
+    <string name="added_to_fav">Removed from favorites</string>
+    <string name="removed_from_fav">Added to favorites</string>
     
-    <string name="menu_search">Search in Italian Costitution</string>
+    <string name="menu_search">Search in italian constitution</string>
     <string name="search_activity_label">Search results</string>
     
     <string name="warning_dbtoupdate_title">Warning!</string>
-    <string name="warning_dbtoupdate_msg">The database need to be updated. This will remove all your favorites. Are you sure you want to update it?</string>
+    <string name="warning_dbtoupdate_msg">Warning! The database needs to be updated, but it must be overwriten. This means that you will loose any preference. Are you sure?</string>
 	<string name="warning_dbtoupdate_never">Never</string>
+	
+	<string name="app_name">Costituzione Italiana</string>
 </resources>
