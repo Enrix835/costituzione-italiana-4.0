@@ -22,15 +22,23 @@ package com.zephyrteam.costituzione.fragments;
 import java.util.List;
 
 import com.zephyrteam.costituzione.Constants;
+import com.zephyrteam.costituzione.R;
 import com.zephyrteam.costituzione.components.EntriesAdapter;
 import com.zephyrteam.costituzione.components.SingleEntry;
 import com.zephyrteam.costituzione.util.LoadSearchResultsTask;
 
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public class SearchResultsFragment extends ListFragment {
-	List<SingleEntry> list;
+public class SearchResultsFragment extends Fragment {
+	public List<SingleEntry> list;
+	public TextView pSearchResults;
+	public ListView pListView;
 	
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -38,6 +46,18 @@ public class SearchResultsFragment extends ListFragment {
        
         LoadSearchResultsTask task = new LoadSearchResultsTask(getActivity(), this);
         task.execute();
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View main = inflater.inflate(R.layout.search_results_view, null, true);
+		
+		if (main != null) {
+			pListView = (ListView)main.findViewById(android.R.id.list);
+			pSearchResults = (TextView)main.findViewById(R.id.search_results_text);
+		}
+		
+		return main;
 	}
 	
 	 public static SearchResultsFragment newInstance(String keyword) {
@@ -61,8 +81,26 @@ public class SearchResultsFragment extends ListFragment {
 		   return getArguments().getInt(Constants.EXTRA_CATEGORY, -1);
 	   }
 	    
-	   public void setMyAdapter(EntriesAdapter adapter) {
-			this.setListAdapter(adapter);
+	   public void setAdapter(EntriesAdapter adapter) {
+		   if (pListView != null) {
+			   pListView.setAdapter(adapter);
+		   }
+	   }
+	   
+	   public void setResultsText(String keyword) {
+		   if (pSearchResults != null) {
+			   int num = (list == null) ? 0 : list.size();
+			   
+			   if (num == 0) {
+				   pSearchResults.setText(getActivity().getResources().getString(R.string.search_results_zero, keyword));
+			   } else if (num == 1) {
+				   pSearchResults.setText(getActivity().getResources().getQuantityString(R.plurals.search_results, num, keyword));
+			   } else if (num >= 2) {
+				   pSearchResults.setText(getActivity().getResources().getQuantityString(R.plurals.search_results, num, num, keyword));
+			   }
+			   
+			   pSearchResults.setVisibility(View.VISIBLE);
+		   }
 	   }
 	
 }

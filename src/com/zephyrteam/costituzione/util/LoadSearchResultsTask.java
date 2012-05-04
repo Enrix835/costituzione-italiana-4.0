@@ -19,21 +19,20 @@
 
 package com.zephyrteam.costituzione.util;
 
-import java.util.List;
-
 import com.zephyrteam.costituzione.components.EntriesAdapter;
 import com.zephyrteam.costituzione.components.MultipleTouchListener;
-import com.zephyrteam.costituzione.components.SingleEntry;
 import com.zephyrteam.costituzione.fragments.SearchResultsFragment;
 
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ListView;
 
 public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdapter> {
 	Activity activity;
 	SearchResultsFragment fragment;
+	String keyword;
 	
 	public LoadSearchResultsTask(Activity activity, SearchResultsFragment fragment) {
 		this.activity = activity;
@@ -42,10 +41,10 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 	
 	@Override
 	protected EntriesAdapter doInBackground(Object... params) {
-		String keyword = fragment.getKeyword();
+		keyword = fragment.getKeyword();
 		int category = fragment.getCallingCategory();
 		
-		List<SingleEntry> list = null;
+		fragment.list = null;
 		
 		DatabaseHandler dbh = new DatabaseHandler(activity);
 		dbh.open(false);
@@ -59,9 +58,8 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 			res = dbh.getEntry(Util.getCategoryRomanInt(keyword));
 			
 		} else if (Util.isRange(keyword)){
-			String[] range = keyword.split("-");
 			res = (category == -1) ? 
-					dbh.getRangeEntries(range[0], range[1]) : dbh.getRangeEntries(range[0], range[1], category);
+					dbh.getEntries(Util.getRange(keyword)) : dbh.getEntries(Util.getRange(keyword), category);
 		
 		} else if (Util.isList(keyword)) {
 			res = (category == -1) ?
@@ -77,27 +75,26 @@ public class LoadSearchResultsTask extends AsyncTask<Object, Object, EntriesAdap
 					dbh.getSimilarEntries(keyword) : dbh.getSimilarEntries(keyword, category);
 		}
 		
-		list = dbh.getEntriesFromCursor(res);
+		fragment.list = dbh.getEntriesFromCursor(res);
 		
 		res.close();
 		dbh.close();
 		
-		return new EntriesAdapter(activity, list);
+		return new EntriesAdapter(activity, fragment.list);
 	}
 	
 	@Override
 	protected void onPostExecute(EntriesAdapter result) {
-		fragment.setListAdapter(result);
+        fragment.setResultsText(keyword);
+        fragment.pListView.setVisibility(View.VISIBLE);
         
-        final ListView mList = fragment.getListView();
-        fragment.registerForContextMenu(mList);
-        
-        mList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        MultipleTouchListener listener = new MultipleTouchListener(result, mList, activity);
-        
-        mList.setMultiChoiceModeListener(listener);
-        
-        mList.setOnItemClickListener(listener.getClickListener());
+		fragment.setAdapter(result);
+		
+        fragment.registerForContextMenu(fragment.pListView);
+        fragment.pListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        MultipleTouchListener listener = new MultipleTouchListener(result, fragment.pListView, activity);
+        fragment.pListView.setMultiChoiceModeListener(listener);
+        fragment.pListView.setOnItemClickListener(listener.getClickListener());
 	}
 
 }

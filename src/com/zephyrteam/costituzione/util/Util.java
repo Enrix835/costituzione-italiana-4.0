@@ -78,43 +78,43 @@ public class Util {
 	public static int getCategoryRomanInt(String num) {
 		if(num.equals("I"))
 			return 140;
-		else if(num.equals("II"))
+		else if(num.equalsIgnoreCase("II"))
 			return 141;
-		else if(num.equals("III"))
+		else if(num.equalsIgnoreCase("III"))
 			return 142;
-		else if(num.equals("IV"))
+		else if(num.equalsIgnoreCase("IV"))
 			return 143;
-		else if(num.equals("V"))
+		else if(num.equalsIgnoreCase("V"))
 			return 144;
-		else if(num.equals("VI"))
+		else if(num.equalsIgnoreCase("VI"))
 			return 145;
-		else if(num.equals("VII"))
+		else if(num.equalsIgnoreCase("VII"))
 			return 146;
-		else if(num.equals("VIII"))
+		else if(num.equalsIgnoreCase("VIII"))
 			return 147;
-		else if(num.equals("IX"))
+		else if(num.equalsIgnoreCase("IX"))
 			return 148;
-		else if(num.equals("X"))
+		else if(num.equalsIgnoreCase("X"))
 			return 149;
-		else if(num.equals("XI"))
+		else if(num.equalsIgnoreCase("XI"))
 			return 150;
-		else if(num.equals("XII"))
+		else if(num.equalsIgnoreCase("XII"))
 			return 151;
-		else if(num.equals("XIII"))
+		else if(num.equalsIgnoreCase("XIII"))
 			return 152;
-		else if(num.equals("XIV"))
+		else if(num.equalsIgnoreCase("XIV"))
 			return 153;
-		else if(num.equals("XV"))
+		else if(num.equalsIgnoreCase("XV"))
 			return 154;
-		else if(num.equals("XVI"))
+		else if(num.equalsIgnoreCase("XVI"))
 			return 155;
-		else if(num.equals("XVII"))
+		else if(num.equalsIgnoreCase("XVII"))
 			return 156;
-		else if(num.equals("XVIII"))
+		else if(num.equalsIgnoreCase("XVIII"))
 			return 157;
-		else if(num.equals("XIX"))
+		else if(num.equalsIgnoreCase("XIX"))
 			return 158;
-		else if(num.equals("XX"))
+		else if(num.equalsIgnoreCase("XX"))
 			return 159;
 		else return 1;
 	}
@@ -137,12 +137,41 @@ public class Util {
 		String[] tmp = str.split("-");
 		
 		try {
-			int min = Integer.parseInt(tmp[0]);
-			int max = Integer.parseInt(tmp[1]);
+			int min, max;
+			
+			if (isOnlyRomanNumber(tmp[0])) {
+				min = getCategoryRomanInt(tmp[0]);
+			} else {
+				min = Integer.parseInt(tmp[0]);
+			}
+			
+			if (isOnlyRomanNumber(tmp[1])) {
+				max = getCategoryRomanInt(tmp[1]);
+			} else {
+				max = Integer.parseInt(tmp[1]);
+			}
+			
 			return (max >= min);
 		} catch (NumberFormatException e) {
 			return false;
 		}
+	}
+	
+	public static int[] getRangeLimits(String str) {
+		String[] tmp = str.split("-");
+		int[] ret = new int[2];
+		
+		if(isOnlyNumeric(tmp[0])) 
+			ret[0] = Integer.parseInt(tmp[0]);
+		else if (isOnlyRomanNumber(tmp[0]))
+			ret[0] = getCategoryRomanInt(tmp[0]);
+		
+		if(isOnlyNumeric(tmp[1])) 
+			ret[1] = Integer.parseInt(tmp[1]);
+		else if (isOnlyRomanNumber(tmp[1]))
+			ret[1] = getCategoryRomanInt(tmp[1]);
+		
+		return ret;
 	}
 	
 	public static boolean isList(String str) {
@@ -151,7 +180,7 @@ public class Util {
 		String [] tmp = str.replace(" ", "").split(",");
 		
 		for(String s : tmp) {
-			if(!isOnlyNumeric(s)) return false;
+			if(!isOnlyNumeric(s) || !isOnlyRomanNumber(s)) return false;
 		}
 		return true;
 	}
@@ -161,9 +190,22 @@ public class Util {
 		String [] tmp = str.replace(" ,", ",").replace(", ", ",").split(",");
 		
 		for(String s : tmp) {
-			if(!isOnlyNumeric(s) && !isRange(s)) return false;
+			if(!(isOnlyNumeric(s) || isOnlyRomanNumber(s)) && !isRange(s)) return false;
 		}
 		return true;
+	}
+	
+	public static int[] getRange(String list) {
+		int[] range = getRangeLimits(list);
+		
+		int[] ret = new int[range[1] - range[0] + 1];
+		int i = 0;
+		
+		for(int x = range[0]; x <= range[1]; x++) {
+			ret[i++] = x;
+		}
+		
+		return ret;
 	}
 	
 	public static int[] getListOfEntries(String list) {
@@ -172,7 +214,10 @@ public class Util {
 		int[] ret = new int[tmp.length];
 		
 		for(int i = 0; i < tmp.length; i++) {
-			ret[i] = Integer.parseInt(tmp[i]);
+			if (isOnlyNumeric(tmp[i]))
+				ret[i] = Integer.parseInt(tmp[i]);
+			else if (isOnlyRomanNumber(tmp[i]))
+				ret[i] = getCategoryRomanInt(tmp[i]);
 		}
 		
 		return ret;
@@ -185,14 +230,15 @@ public class Util {
 		if (!list.contains("-")) return getListOfEntries(list);
 		
 		for (int i = 0; i < tmp.length; i++) {
-			if (Util.isOnlyNumeric(tmp[i])) {
+			if (isOnlyNumeric(tmp[i])) {
 				ret.add(Integer.parseInt(tmp[i]));
-			} else if (Util.isRange(tmp[i])) {
-				String[] range = tmp[i].split("-");
-				int min = Integer.parseInt(range[0]);
-				int max = Integer.parseInt(range[1]);
 				
-				for (int x = min; x <= max; x++) {
+			} else if (isOnlyRomanNumber(tmp[i])) {
+				ret.add(getCategoryRomanInt(tmp[i]));
+				
+			} else if (Util.isRange(tmp[i])) {
+				int[] range = getRangeLimits(tmp[i]);
+				for (int x = range[0]; x <= range[1]; x++) {
 					ret.add(x);
 				}
 			}

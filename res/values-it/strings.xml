@@ -39,4 +39,10 @@
 	<string name="warning_dbtoupdate_never">Mai</string>
 	
 	<string name="app_name">Costituzione Italiana</string>
+	<string name="search_results_zero">Nessun risultato per \"%s\"</string>
+	
+	<plurals name="search_results" formatted="true">
+	    <item quantity="one">Un risultato per \"%1$s\"</item>
+	    <item quantity="other">%1$d risultati per \"%2$s\"</item>
+	</plurals>
 </resources>
