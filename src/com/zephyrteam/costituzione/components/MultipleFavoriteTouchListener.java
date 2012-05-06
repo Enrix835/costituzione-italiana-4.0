@@ -19,8 +19,9 @@
 
 package com.zephyrteam.costituzione.components;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.zephyrteam.costituzione.Constants;
 import com.zephyrteam.costituzione.DetailedActivity;
@@ -44,14 +45,14 @@ import android.widget.Toast;
 public class MultipleFavoriteTouchListener implements MultiChoiceModeListener {
 		ListView mList;
 		EntriesAdapter mAdapter;
-		List<Integer> selected;
+		Set<Integer> selected;
 		List<SingleEntry> mEntries;
 		Context context;
 		
 		public MultipleFavoriteTouchListener(EntriesAdapter adapter, ListView list, Context context) {
 			mList = list;
 			mAdapter = adapter;
-			selected = new ArrayList<Integer>();
+			selected = new HashSet<Integer>();
 			this.context = context;
 			mEntries = adapter.getList();
 		}
@@ -123,9 +124,10 @@ public class MultipleFavoriteTouchListener implements MultiChoiceModeListener {
 		@Override
 		public void onItemCheckedStateChanged(ActionMode mode, int position,
 				long id, boolean checked) {
-			
-			selected.add(position);
-			
+			if (checked) 
+				selected.add(position);
+			else 
+				selected.remove(position);
 		}
 		
 		public ItemClickListener getClickListener() {
